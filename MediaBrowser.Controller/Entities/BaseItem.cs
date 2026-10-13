@@ -97,6 +97,12 @@ namespace MediaBrowser.Controller.Entities
 
         public const char SlugChar = '-';
 
+        public bool IsInternet { get; set; } = false;
+
+        public bool Scheduled { get; set; } = false;
+
+        public bool IsDownloaded { get; set; } = true;
+
         protected BaseItem()
         {
             Tags = Array.Empty<string>();
@@ -131,6 +137,10 @@ namespace MediaBrowser.Controller.Entities
 
         [JsonIgnore]
         public virtual ItemImageInfo[] ImageInfos { get; set; }
+
+        public string BackupImageUrl { get; set; } = string.Empty;
+
+        public DateTime? FirstAiring { get; set; }
 
         [JsonIgnore]
         public bool IsVirtualItem { get; set; }
@@ -327,6 +337,13 @@ namespace MediaBrowser.Controller.Entities
             get
             {
                 var path = Path;
+                var internet = IsInternet;
+
+                if (internet)
+                {
+                    return LocationType.FileSystem;
+                }
+
                 if (string.IsNullOrEmpty(path))
                 {
                     if (SourceType == SourceType.Channel)
@@ -334,6 +351,12 @@ namespace MediaBrowser.Controller.Entities
                         return LocationType.Remote;
                     }
 
+                    return LocationType.Virtual;
+                }
+
+                // If the file doesn't exist, treat it as virtual
+                if (FileSystem.IsPathFile(path) && !File.Exists(path))
+                {
                     return LocationType.Virtual;
                 }
 
@@ -825,7 +848,11 @@ namespace MediaBrowser.Controller.Entities
 
         public virtual bool CanDelete()
         {
-            if (SourceType == SourceType.Channel)
+            if (Scheduled && IsInternet && !string.IsNullOrEmpty(Path) && !File.Exists(Path))
+            {
+                return false;
+            }
+            else if (SourceType == SourceType.Channel)
             {
                 return ChannelManager.CanDelete(this);
             }

@@ -871,6 +871,11 @@ namespace MediaBrowser.Providers.Manager
                 }
             }
 
+            foreach (var provider in providers)
+            {
+                provider.GetType();
+            }
+
             foreach (var provider in customProviders.Where(i => i is not IPreRefreshProvider))
             {
                 await RunCustomProvider(provider, item, logName, options, refreshResult, cancellationToken).ConfigureAwait(false);

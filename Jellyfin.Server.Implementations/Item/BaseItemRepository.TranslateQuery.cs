@@ -898,11 +898,23 @@ public sealed partial class BaseItemRepository
             baseQuery = baseQuery.WhereOneOrMany(filter.Years, e => e.ProductionYear!.Value);
         }
 
-        var isVirtualItem = filter.IsVirtualItem ?? filter.IsMissing;
-        if (isVirtualItem.HasValue)
+        if (filter.IsVirtualItem.HasValue)
         {
             baseQuery = baseQuery
-                .Where(e => e.IsVirtualItem == isVirtualItem.Value);
+                .Where(e => e.IsVirtualItem == filter.IsVirtualItem.Value);
+        }
+        else if (filter.IsMissing.HasValue)
+        {
+            if (filter.IsMissing.Value)
+            {
+                baseQuery = baseQuery.Where(e => e.IsVirtualItem);
+            }
+            else
+            {
+                // Scheduled internet placeholders stay virtual until downloaded, but they aren't "missing" episodes and should still be shown.
+                // Also show internet items even if not scheduled (e.g., after CantDownload is set).
+                baseQuery = baseQuery.Where(e => !e.IsVirtualItem || e.Scheduled || e.IsInternet || (e.Data != null && (e.Data.Contains("Scheduled\":true") || e.Data.Contains("IsInternet\":true") || e.Data.Contains("CantDownload\":true"))));
+            }
         }
 
         if (filter.IsSpecialSeason.HasValue)
@@ -1114,6 +1126,24 @@ public sealed partial class BaseItemRepository
             baseQuery = filter.IsPlaceHolder.Value
                 ? baseQuery.WhereItemOrDescendantMatches(context, isPlaceHolder)
                 : baseQuery.WhereNeitherItemNorDescendantMatches(context, isPlaceHolder);
+        }
+
+        if (filter.IsDownloadable)
+        {
+            Expression<Func<BaseItemEntity, bool>> isDownloadable = e => e.Data!.Contains("IsDownloadable\":true");
+            baseQuery = baseQuery.WhereItemOrDescendantMatches(context, isDownloadable);
+        }
+
+        if (filter.CantDownload)
+        {
+            Expression<Func<BaseItemEntity, bool>> cantDownload = e => e.Data!.Contains("CantDownload\":true");
+            baseQuery = baseQuery.WhereItemOrDescendantMatches(context, cantDownload);
+        }
+
+        if (filter.Scheduled)
+        {
+            Expression<Func<BaseItemEntity, bool>> scheduled = e => e.Scheduled || (e.Data != null && e.Data.Contains("Scheduled\":true"));
+            baseQuery = baseQuery.WhereItemOrDescendantMatches(context, scheduled);
         }
 
         if (filter.HasSpecialFeature.HasValue)

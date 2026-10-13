@@ -555,6 +555,17 @@ namespace Emby.Server.Implementations
             serviceCollection.AddSingleton<ISearchManager, SearchManager>();
             serviceCollection.AddSingleton<ISearchProvider, SqlSearchProvider>();
 
+            // Internet schedule services used by API controllers and scheduled tasks
+            serviceCollection.AddSingleton<IInternetScheduleFetcher, InternetScheduleFetcher>();
+
+            serviceCollection.AddSingleton<IInternetSearchFetcher, InternetSearchFetcher>();
+
+            serviceCollection.AddSingleton<IEpisodeGenerator, EpisodeGenerator>();
+
+            serviceCollection.AddSingleton<IMovieGenerator, MovieGenerator>();
+
+            serviceCollection.AddSingleton<ISeriesGenerator, SeriesGenerator>();
+
             serviceCollection.AddSingleton<IWebSocketManager, WebSocketManager>();
 
             serviceCollection.AddSingleton<IImageProcessor, ImageProcessor>();

@@ -37,6 +37,12 @@ namespace MediaBrowser.Controller.BaseItemManager
                 return !baseItem.EnableMediaSourceDisplay;
             }
 
+            // Internet items should always allow metadata fetchers
+            if (baseItem.IsInternet)
+            {
+                return true;
+            }
+
             if (libraryTypeOptions is not null)
             {
                 return libraryTypeOptions.MetadataFetchers.Contains(name, StringComparison.OrdinalIgnoreCase);

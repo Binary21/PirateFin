@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Jellyfin.Data.Enums;
-using Jellyfin.Database.Implementations.Entities;
 using MediaBrowser.Model.Drawing;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Library;
@@ -20,6 +19,14 @@ namespace MediaBrowser.Model.Dto
     /// </summary>
     public class BaseItemDto : IHasProviderIds, IItemDto, IHasServerId
     {
+        public bool IsInterent { get; set; }
+
+        public bool IsDownloadable { get; set; }
+
+        public bool CantDownload { get; set; }
+
+        public string Title { get; set; }
+
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -221,6 +228,11 @@ namespace MediaBrowser.Model.Dto
         /// </summary>
         /// <value>The number.</value>
         public string Number { get; set; }
+
+        /// <summary>
+        /// Gets or Sets the download url of the item.
+        /// </summary>
+        public string MagnetURL { get; set; }
 
         public string ChannelNumber { get; set; }
 
@@ -491,6 +503,14 @@ namespace MediaBrowser.Model.Dto
         /// </summary>
         /// <value>The backdrop image tags.</value>
         public string[] BackdropImageTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the backup image url.
+        /// </summary>
+        /// <value>The backup image url.</value>
+        public string BackupImageUrl { get; set; }
+
+        public DateTime? FirstAiring { get; set; }
 
         /// <summary>
         /// Gets or sets the screenshot image tags.

@@ -36,6 +36,15 @@ namespace MediaBrowser.Controller.Providers
         void QueueRefresh(Guid itemId, MetadataRefreshOptions options, RefreshPriority priority);
 
         /// <summary>
+        /// Directly refreshes Item. Skips queue.
+        /// </summary>
+        /// <param name="item">Item.</param>
+        /// <param name="options">MetadataRefreshOptions for operation.</param>
+        /// <param name="cancellationToken">RefreshPriority for operation.</param>
+        /// <returns> returns nothing.</returns>
+        public Task RefreshItem(BaseItem item, MetadataRefreshOptions options, CancellationToken cancellationToken);
+
+        /// <summary>
         /// Refreshes the full item.
         /// </summary>
         /// <param name="item">The item.</param>
@@ -43,6 +52,15 @@ namespace MediaBrowser.Controller.Providers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task.</returns>
         Task RefreshFullItem(BaseItem item, MetadataRefreshOptions options, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Refreshes the full items parallely.
+        /// </summary>
+        /// <param name="items">The item.</param>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task.</returns>
+        Task RefreshFullItems(List<BaseItem> items, MetadataRefreshOptions options, CancellationToken cancellationToken);
 
         /// <summary>
         /// Refreshes the metadata.

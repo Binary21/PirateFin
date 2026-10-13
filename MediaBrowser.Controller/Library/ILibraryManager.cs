@@ -624,6 +624,16 @@ namespace MediaBrowser.Controller.Library
         /// <returns>Task.</returns>
         Task<ItemImageInfo> ConvertImageToLocal(BaseItem item, ItemImageInfo image, int imageIndex, bool removeOnFailure = true);
 
+         /// <summary>
+        /// Refreshes a specific subfolder and its contents.
+        /// </summary>
+        /// <param name="path">The full path to the subfolder to refresh.</param>
+        /// <param name="progress">Optional progress reporter.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="hardRefresh">Early Exit if directory does not exist.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        Task RefreshSubfolder(string path, IProgress<double> progress, CancellationToken cancellationToken = default, bool hardRefresh = true);
+
         /// <summary>
         /// Gets the items.
         /// </summary>

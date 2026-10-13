@@ -88,6 +88,9 @@ public static class BaseItemMapper
         dto.Width = entity.Width.GetValueOrDefault();
         dto.Height = entity.Height.GetValueOrDefault();
         dto.UserData = entity.UserData;
+        dto.IsInternet = entity.IsInternet;
+        dto.Scheduled = entity.Scheduled;
+        dto.IsDownloaded = entity.IsDownloaded;
 
         if (entity.Provider is not null)
         {
@@ -143,10 +146,18 @@ public static class BaseItemMapper
             hasSeriesName.SeriesPresentationUniqueKey = entity.SeriesPresentationUniqueKey;
         }
 
+        if (dto is Season season)
+        {
+            season.Subscribed = entity.Subscribed;
+        }
+
         if (dto is Episode episode)
         {
             episode.SeasonName = entity.SeasonName;
             episode.SeasonId = entity.SeasonId.GetValueOrDefault();
+            episode.IsInternet = entity.IsInternet;
+            episode.Scheduled = entity.Scheduled;
+            episode.IsDownloaded = entity.IsDownloaded;
         }
 
         if (dto is IHasArtist hasArtists)
@@ -263,6 +274,9 @@ public static class BaseItemMapper
         entity.OwnerId = dto.OwnerId == Guid.Empty ? null : dto.OwnerId;
         entity.Width = dto.Width;
         entity.Height = dto.Height;
+        entity.IsInternet = dto.IsInternet;
+        entity.Scheduled = dto.Scheduled;
+        entity.IsDownloaded = dto.IsDownloaded;
         entity.Provider = dto.ProviderIds.Select(e => new BaseItemProvider()
         {
             Item = entity,
@@ -317,10 +331,18 @@ public static class BaseItemMapper
             entity.SeriesPresentationUniqueKey = hasSeriesName.SeriesPresentationUniqueKey;
         }
 
+        if (dto is Season season)
+        {
+            entity.Subscribed = season.Subscribed;
+        }
+
         if (dto is Episode episode)
         {
             entity.SeasonName = episode.SeasonName;
             entity.SeasonId = episode.SeasonId;
+            entity.IsInternet = episode.IsInternet;
+            entity.Scheduled = episode.Scheduled;
+            entity.IsDownloaded = episode.IsDownloaded;
         }
 
         if (dto is IHasArtist hasArtists)

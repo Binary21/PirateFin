@@ -1009,10 +1009,18 @@ namespace Emby.Server.Implementations.Dto
                 }
             }
 
+            if (item is Episode episodeType)
+            {
+                dto.Title = episodeType.Name;
+                dto.IsInterent = episodeType.IsInternet;
+                dto.IsDownloadable = episodeType.IsDownloadable;
+                dto.MagnetURL = episodeType.DownloadUrl;
+            }
+
             dto.Id = item.Id;
             dto.IndexNumber = item.IndexNumber;
             dto.ParentIndexNumber = item.ParentIndexNumber;
-
+            dto.FirstAiring = item.FirstAiring;
             if (item.IsFolder)
             {
                 dto.IsFolder = true;
@@ -1056,6 +1064,7 @@ namespace Emby.Server.Implementations.Dto
 
             dto.Name = item.Name;
             dto.OfficialRating = item.OfficialRating;
+            dto.BackupImageUrl = item.BackupImageUrl;
 
             if (options.ContainsField(ItemFields.Overview))
             {

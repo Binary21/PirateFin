@@ -1,0 +1,14 @@
+{
+    "Jackett": {
+        "BaseUrl": "", // local url to Jackett web client
+        "ApiKey": "", // Jackett web client API key
+        "Indexer": { // indexers Jackett will use (Movies hasnt been built yet)
+            "Shows": "knaben", // this trackers will need to be manually added in the jackett client
+            "Anime": "nyaasi" // this trackers will need to be manually added in the jackett client
+        },
+        "AnimeCategory": "5070", // Anime Category (will prevent downloading manga by mistake)
+        "ShowCategory": "5040", // Show Category (will prevent downloading books by mistake)
+        "AnimeAuthors": [ "[Yameii]", "[ToonsHub]", "[Erai-raws]", "[SubsPlease]" ], // Authorized Release authors for anime
+        "ShowAuthors": [ "1080p MeGusta", "1080p EDITH", "1080p ETHEL" ] // Authorized release authors for tv shows
+    }
+}

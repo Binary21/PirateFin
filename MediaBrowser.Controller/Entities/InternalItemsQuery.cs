@@ -117,6 +117,9 @@ namespace MediaBrowser.Controller.Entities
             || Is4K.HasValue
             || IsLocked.HasValue
             || IsPlaceHolder.HasValue
+            || IsDownloadable
+            || CantDownload
+            || Scheduled
             || IsMovie.HasValue
             || IsSports.HasValue
             || IsKids.HasValue
@@ -203,6 +206,12 @@ namespace MediaBrowser.Controller.Entities
         public string[] IncludeInheritedTags { get; set; }
 
         public IReadOnlyList<string> Genres { get; set; }
+
+        public bool IsDownloadable { get; set; }
+
+        public bool CantDownload { get; set; }
+
+        public bool Scheduled { get; set; }
 
         public bool? IsSpecialSeason { get; set; }
 

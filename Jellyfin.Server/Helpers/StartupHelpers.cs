@@ -250,6 +250,36 @@ public static class StartupHelpers
     }
 
     /// <summary>
+    /// Creates each per-feature configuration file from its bundled default when it doesn't exist yet, so
+    /// existing user edits are never overwritten.
+    /// </summary>
+    /// <param name="appPaths">The application paths.</param>
+    /// <returns>A task representing the creation of the missing configuration files.</returns>
+    public static async Task InitFeatureConfigFiles(IApplicationPaths appPaths)
+    {
+        foreach (var fileName in Program.FeatureConfigFiles)
+        {
+            string configPath = Path.Combine(appPaths.ConfigurationDirectoryPath, fileName);
+            if (File.Exists(configPath))
+            {
+                continue;
+            }
+
+            string resourcePath = "Jellyfin.Server.Resources.Configuration." + fileName;
+            Stream resource = typeof(Program).Assembly.GetManifestResourceStream(resourcePath)
+                              ?? throw new InvalidOperationException($"Invalid resource path: '{resourcePath}'");
+            await using (resource.ConfigureAwait(false))
+            {
+                Stream dst = new FileStream(configPath, FileMode.CreateNew, FileAccess.Write, FileShare.None, IODefaults.FileStreamBufferSize, FileOptions.Asynchronous);
+                await using (dst.ConfigureAwait(false))
+                {
+                    await resource.CopyToAsync(dst).ConfigureAwait(false);
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Initialize Serilog using configuration and fall back to defaults on failure.
     /// </summary>
     /// <param name="configuration">The configuration object.</param>

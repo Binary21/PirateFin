@@ -186,7 +186,7 @@ namespace MediaBrowser.Controller.Entities
 
         public override bool CanDelete()
         {
-            if (IsRoot)
+            if (IsRoot || (Scheduled && IsInternet && !string.IsNullOrEmpty(Path) && !File.Exists(Path)))
             {
                 return false;
             }

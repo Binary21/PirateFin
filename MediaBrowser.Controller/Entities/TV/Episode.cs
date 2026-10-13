@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -40,6 +41,20 @@ namespace MediaBrowser.Controller.Entities.TV
 
         public int? AirsBeforeEpisodeNumber { get; set; }
 
+        public string DownloadUrl { get; set; } = string.Empty;
+
+        public int? Seeders { get; set; }
+
+        public bool IsDownloadable { get; set; } = false;
+
+        public bool CantDownload { get; set; } = false;
+
+        public DateTime EpisodeReleaseWeek { get; set; }
+
+        public string LibraryType { get; set; }
+
+        public string AlternateTitle { get; set; } = string.Empty;
+
         /// <summary>
         /// Gets or sets the ending episode number for double episodes.
         /// </summary>
@@ -66,6 +81,22 @@ namespace MediaBrowser.Controller.Entities.TV
 
         [JsonIgnore]
         protected override bool EnableDefaultVideoUserDataKeys => false;
+
+        public override bool CanDelete()
+        {
+            // Generated placeholders have no file on disk; they must survive library validation even after leaving the download queue (Scheduled = false).
+            if (IsPlaceHolder && IsVirtualItem && IsInternet && !string.IsNullOrEmpty(Path) && !File.Exists(Path))
+            {
+                return false;
+            }
+
+            if (IsActiveRecording())
+            {
+                return false;
+            }
+
+            return base.CanDelete();
+        }
 
         /// <summary>
         /// Gets the Episode's Series Instance.
@@ -128,7 +159,7 @@ namespace MediaBrowser.Controller.Entities.TV
         }
 
         [JsonIgnore]
-        public bool IsMissingEpisode => LocationType == LocationType.Virtual;
+        public bool IsMissingEpisode => LocationType == LocationType.Virtual && (!IsInternet || CantDownload);
 
         [JsonIgnore]
         public Guid SeasonId { get; set; }

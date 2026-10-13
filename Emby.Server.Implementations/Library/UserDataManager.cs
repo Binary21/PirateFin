@@ -25,6 +25,8 @@ namespace Emby.Server.Implementations.Library
     /// </summary>
     public class UserDataManager : IUserDataManager
     {
+        private static readonly Guid PlaceholderItemId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+
         private readonly IServerConfigurationManager _config;
         private readonly IDbContextFactory<JellyfinDbContext> _repository;
         private readonly FastConcurrentLru<string, UserItemData> _cache;
@@ -60,22 +62,39 @@ namespace Emby.Server.Implementations.Library
             using var dbContext = _repository.CreateDbContext();
             using var transaction = dbContext.Database.BeginTransaction();
 
-            foreach (var key in keys)
+            if (!dbContext.Users.Any(e => e.Id == user.Id))
             {
-                userData.Key = key;
-                var userDataEntry = Map(userData, user.Id, item.Id);
-                if (dbContext.UserData.Any(f => f.ItemId == userDataEntry.ItemId && f.UserId == userDataEntry.UserId && f.CustomDataKey == userDataEntry.CustomDataKey))
-                {
-                    dbContext.UserData.Attach(userDataEntry).State = EntityState.Modified;
-                }
-                else
-                {
-                    dbContext.UserData.Add(userDataEntry);
-                }
+                return;
             }
 
-            dbContext.SaveChanges();
-            transaction.Commit();
+            var targetItemId = dbContext.BaseItems.Any(e => e.Id == item.Id)
+                ? item.Id
+                : PlaceholderItemId;
+
+            UpsertUserDataRows(dbContext, keys, userData, user.Id, targetItemId);
+
+            try
+            {
+                dbContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (DbUpdateException ex) when (IsForeignKeyViolation(ex))
+            {
+                // Item can disappear between existence check and SaveChanges due to concurrent library updates.
+                transaction.Rollback();
+
+                using var retryContext = _repository.CreateDbContext();
+                using var retryTransaction = retryContext.Database.BeginTransaction();
+
+                if (!retryContext.Users.Any(e => e.Id == user.Id))
+                {
+                    return;
+                }
+
+                UpsertUserDataRows(retryContext, keys, userData, user.Id, PlaceholderItemId);
+                retryContext.SaveChanges();
+                retryTransaction.Commit();
+            }
 
             var userId = user.InternalId;
             var cacheKey = GetCacheKey(userId, item.Id);
@@ -91,6 +110,31 @@ namespace Emby.Server.Implementations.Library
                 Item = item
             });
         }
+
+        private void UpsertUserDataRows(
+            JellyfinDbContext dbContext,
+            IReadOnlyList<string> keys,
+            UserItemData userData,
+            Guid userId,
+            Guid itemId)
+        {
+            foreach (var key in keys)
+            {
+                userData.Key = key;
+                var userDataEntry = Map(userData, userId, itemId);
+                if (dbContext.UserData.Any(f => f.ItemId == userDataEntry.ItemId && f.UserId == userDataEntry.UserId && f.CustomDataKey == userDataEntry.CustomDataKey))
+                {
+                    dbContext.UserData.Attach(userDataEntry).State = EntityState.Modified;
+                }
+                else
+                {
+                    dbContext.UserData.Add(userDataEntry);
+                }
+            }
+        }
+
+        private static bool IsForeignKeyViolation(DbUpdateException exception)
+            => exception.InnerException?.Message.Contains("FOREIGN KEY constraint failed", StringComparison.OrdinalIgnoreCase) == true;
 
         /// <inheritdoc />
         public void SaveUserData(User user, BaseItem item, UpdateUserItemDataDto userDataDto, UserDataSaveReason reason)

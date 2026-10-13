@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using AsyncKeyedLock;
 using Jellyfin.Data.Enums;
 using Jellyfin.Data.Events;
 using Jellyfin.Extensions;
-using Jellyfin.Extensions.Json;
 using MediaBrowser.Common.Net;
 using MediaBrowser.Controller;
 using MediaBrowser.Controller.BaseItemManager;
@@ -34,7 +31,6 @@ using MediaBrowser.Model.Extensions;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Net;
 using MediaBrowser.Model.Providers;
-using MediaBrowser.Model.Querying;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Book = MediaBrowser.Controller.Entities.Book;
@@ -845,7 +841,7 @@ namespace MediaBrowser.Providers.Manager
 
             try
             {
-                if (!saver.IsEnabledFor(item, updateType))
+                if (!saver.IsEnabledFor(item, updateType) && !item.IsInternet)
                 {
                     return false;
                 }
@@ -1187,7 +1183,7 @@ namespace MediaBrowser.Providers.Manager
             }
         }
 
-        private async Task RefreshItem(BaseItem item, MetadataRefreshOptions options, CancellationToken cancellationToken)
+        public async Task RefreshItem(BaseItem item, MetadataRefreshOptions options, CancellationToken cancellationToken)
         {
             await item.RefreshMetadata(options, cancellationToken).ConfigureAwait(false);
 
@@ -1250,6 +1246,32 @@ namespace MediaBrowser.Providers.Manager
         public Task RefreshFullItem(BaseItem item, MetadataRefreshOptions options, CancellationToken cancellationToken)
         {
             return RefreshItem(item, options, cancellationToken);
+        }
+
+        // Paralleized item refresh for multiple episode refresh at once. Makes building seasons take less time.
+        public async Task RefreshFullItems(List<BaseItem> items, MetadataRefreshOptions options, CancellationToken cancellationToken)
+        {
+            var refreshOptions = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = 4,
+                CancellationToken = cancellationToken
+            };
+
+            await Parallel.ForEachAsync(items, refreshOptions, async (item, option) =>
+            {
+                try
+                {
+                    await RefreshItem(item, options, cancellationToken).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to refresh {Series} season {Name} episode {Episode}, ID:({Id})", item.GetParent().GetParent().Name, item.GetParent().Name, item.IndexNumber, item.Id);
+                }
+            }).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

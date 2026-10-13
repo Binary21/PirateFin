@@ -347,7 +347,8 @@ public class TvShowsController : BaseJellyfinApiController
             return NotFound();
         }
 
-        var seasons = item.GetItemList(new InternalItemsQuery(user)
+        var seasons = item.Children.ToList();
+        item.GetItemList(new InternalItemsQuery(user)
         {
             IsMissing = isMissing,
             IsSpecialSeason = isSpecialSeason,

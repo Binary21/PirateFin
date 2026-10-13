@@ -46,6 +46,8 @@ namespace MediaBrowser.Controller.Entities
 
         public string[] AdditionalParts { get; set; }
 
+        public bool IsPlayable { get; set; } = false;
+
         public string[] LocalAlternateVersions { get; set; }
 
         public LinkedChild[] LinkedAlternateVersions { get; set; }

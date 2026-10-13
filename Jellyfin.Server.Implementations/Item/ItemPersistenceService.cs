@@ -46,6 +46,56 @@ public class ItemPersistenceService : IItemPersistenceService
         _logger = logger;
     }
 
+    /// <summary>
+    /// Validates that items can be deleted without violating foreign key constraints.
+    /// </summary>
+    /// <param name="context">The database context.</param>
+    /// <param name="ids">The IDs of items to delete.</param>
+    /// <exception cref="InvalidOperationException">Thrown when items own extras or have linked relationships.</exception>
+    private void ValidateDeletionConstraints(JellyfinDbContext context, IReadOnlyList<Guid> ids)
+    {
+        // Check for owned extras
+        var ownedExtras = context.BaseItems
+            .Where(e => e.OwnerId.HasValue && ids.Contains(e.OwnerId.Value))
+            .Select(e => new { e.Id, e.Name, OwnerName = e.Owner!.Name })
+            .ToList();
+
+        if (ownedExtras.Count != 0)
+        {
+            var extrasByOwner = ownedExtras
+                .GroupBy(e => e.OwnerName)
+                .Select(g => $"{g.Key} ({g.Count()} extra items)")
+                .ToList();
+            throw new InvalidOperationException(
+                $"Cannot delete items that own extra items. The following items have extras that must be deleted first: {string.Join(", ", extrasByOwner)}");
+        }
+
+        // Check for linked children relationships
+        var linkedRelationships = context.LinkedChildren
+            .Where(lc => ids.Contains(lc.ParentId) || ids.Contains(lc.ChildId))
+            .ToList();
+
+        if (linkedRelationships.Count != 0)
+        {
+            var asParent = linkedRelationships.Where(lc => ids.Contains(lc.ParentId)).Count();
+            var asChild = linkedRelationships.Where(lc => ids.Contains(lc.ChildId)).Count();
+
+            var reasons = new List<string>();
+            if (asParent > 0)
+            {
+                reasons.Add($"{asParent} linked children relationship(s) where item is parent");
+            }
+
+            if (asChild > 0)
+            {
+                reasons.Add($"{asChild} linked child relationship(s) where item is child");
+            }
+
+            throw new InvalidOperationException(
+                $"Cannot delete items with linked relationships. {string.Join(" and ", reasons)} must be removed first.");
+        }
+    }
+
     /// <inheritdoc />
     public void DeleteItem(params IReadOnlyList<Guid> ids)
     {
@@ -55,6 +105,11 @@ public class ItemPersistenceService : IItemPersistenceService
         }
 
         using var context = _dbProvider.CreateDbContext();
+
+        // TODO: Check if this is why you cant delete Doctor Stone
+        // Validate that items don't own extras or have linked relationships
+        ValidateDeletionConstraints(context, ids);
+
         using var transaction = context.Database.BeginTransaction();
 
         var date = (DateTime?)DateTime.UtcNow;

@@ -358,6 +358,7 @@ namespace Emby.Server.Implementations.Library
 
         public void DeleteItemsUnsafeFast(IReadOnlyCollection<BaseItem> items, bool deleteSourceFiles = false)
         {
+            _logger.LogInformation("Deleting Items Unsafe Fast: {Items}", items);
             if (items.Count == 0)
             {
                 return;
@@ -411,11 +412,27 @@ namespace Emby.Server.Implementations.Library
 
         public void DeleteItem(BaseItem item, DeleteOptions options, BaseItem parent, bool notifyParentItem)
         {
+            _logger.LogInformation("Deleting Item: {Item}", item);
+
             ArgumentNullException.ThrowIfNull(item);
 
             if (item.SourceType == SourceType.Channel)
             {
-                if (options.DeleteFromExternalProvider)
+                if (item is Video videoFile)
+                {
+                    if (options.DeleteFromExternalProvider && !videoFile.Scheduled)
+                    {
+                        try
+                        {
+                            BaseItem.ChannelManager.DeleteItem(item).GetAwaiter().GetResult();
+                        }
+                        catch (ArgumentException)
+                        {
+                            // channel no longer installed
+                        }
+                    }
+                }
+                else if (options.DeleteFromExternalProvider)
                 {
                     try
                     {
@@ -433,20 +450,46 @@ namespace Emby.Server.Implementations.Library
             if (item is LiveTvProgram)
             {
                 _logger.LogDebug(
-                    "Removing item, Type: {Type}, Name: {Name}, Path: {Path}, Id: {Id}",
+                    "Live Program Removing item, Type: {Type}, Name: {Name}, Path: {Path}, Id: {Id}",
                     item.GetType().Name,
                     item.Name ?? "Unknown name",
                     item.Path ?? string.Empty,
                     item.Id);
             }
-            else
+            else if (item is Episode videoType)
             {
-                _logger.LogInformation(
-                    "Removing item, Type: {Type}, Name: {Name}, Path: {Path}, Id: {Id}",
+                if (!videoType.IsInternet)
+                {
+                    _logger.LogInformation(
+                        "Episode Removing item, Type: {Type}, Name: {Name}, Path: {Path}, Id: {Id}",
+                        videoType.GetType().Name,
+                        videoType.Name ?? "Unknown name",
+                        videoType.Path ?? string.Empty,
+                        videoType.Id);
+                }
+            }
+            else if (item.IsInternet == false)
+            {
+                if (item is MediaBrowser.Controller.Entities.TV.Season season)
+                {
+                    _logger.LogInformation(
+                    "[SeasonErrorEvaluation] Else Removing item, Type: {Type}, Name: {Name}, Path: {Path}, Id: {Id}, IsInternet: {IsInternet}, IsScheduled {Scheduled}",
+                    season.GetType().Name,
+                    season.SeriesName ?? "Unknown name",
+                    season.Path ?? string.Empty,
+                    season.Id,
+                    season.IsInternet,
+                    season.Scheduled);
+                }
+                else
+                {
+                    _logger.LogInformation(
+                    "[SeasonErrorEvaluation] Else Removing item, Type: {Type}, Name: {Name}, Path: {Path}, Id: {Id}",
                     item.GetType().Name,
                     item.Name ?? "Unknown name",
                     item.Path ?? string.Empty,
                     item.Id);
+                }
             }
 
             // If deleting a primary version video, clear PrimaryVersionId from alternate versions
@@ -1436,6 +1479,166 @@ namespace Emby.Server.Implementations.Library
         public void ClearIgnoreRuleCache()
         {
             _dotIgnoreIgnoreRule.ClearDirectoryCache();
+        }
+
+        public async Task RefreshSubfolder(string path, IProgress<double> progress, CancellationToken cancellationToken, bool hardRefresh)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
+            try
+            {
+                _logger.LogInformation("Refreshing subfolder: {Path}", path);
+                progress?.Report(0);
+
+                var directoryService = new DirectoryService(_fileSystem);
+                var directory = _fileSystem.GetDirectoryInfo(path);
+
+                if (!directory.Exists)
+                {
+                    _logger.LogWarning("Directory does not exist: {Path}", path);
+                    if (hardRefresh)
+                    {
+                        return;
+                    }
+                }
+
+                // Find the parent folder in the library
+                var folder = FindByPath(path, true) as Folder;
+                if (folder == null)
+                {
+                    var parentPath = Path.GetDirectoryName(path);
+                    if (parentPath == null)
+                    {
+                        _logger.LogWarning("Parent path not found: {ParentPath}", parentPath);
+                        return;
+                    }
+
+                    var parentFolder = FindByPath(parentPath, true) as Folder;
+                    if (parentFolder == null)
+                    {
+                        _logger.LogWarning("Parent folder not found in library: {ParentPath}", parentPath);
+                        return;
+                    }
+
+                    var folderInfo = _fileSystem.GetDirectoryInfo(path);
+                    if (!folderInfo.Exists)
+                    {
+                        _logger.LogWarning("Folder does not exist: {Path}", path);
+                        return;
+                    }
+
+                    folder = new Folder
+                    {
+                        Name = folderInfo.Name,
+                        Path = path,
+                        DateCreated = folderInfo.CreationTimeUtc,
+                        DateModified = folderInfo.LastWriteTimeUtc
+                    };
+
+                    RegisterItem(folder);
+
+                    // Add the folder to the parent
+                    parentFolder.AddChild(folder);
+                }
+
+                // Process the folder and all its contents recursively
+                ProcessFolderAndContents(path, folder, directoryService);
+
+                // Create refresh options
+                var options = new MetadataRefreshOptions(directoryService)
+                {
+                    MetadataRefreshMode = MetadataRefreshMode.FullRefresh,
+                    ImageRefreshMode = MetadataRefreshMode.FullRefresh,
+                    ReplaceAllImages = true,
+                    ReplaceAllMetadata = true,
+                    ForceSave = true,
+                    IsAutomated = false,
+                    RemoveOldMetadata = false
+                };
+
+                // Get or create the folder in the library
+                // var folder = FindByPath(path, true) as Folder;
+                // if (folder == null)
+                // {
+                //     // If folder doesn't exist in the library, resolve it
+                //     var fileInfo = _fileSystem.GetDirectoryInfo(path);
+                //     folder = ResolvePath(fileInfo, parentFolder, directoryService) as Folder;
+
+                // if (folder == null)
+                //     {
+                //         _logger.LogWarning("Could not resolve folder: {Path}", path);
+                //         return;
+                //     }
+
+                // Add the folder to the parent
+                // parentFolder.AddChild(folder, cancellationToken);
+                // }
+
+                // Validate the folder and its children
+                if (folder != null)
+                {
+                    await folder.ValidateChildren(
+                        progress ?? new Progress<double>(),
+                        options,
+                        recursive: true,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+
+                progress?.Report(100);
+                _logger.LogInformation("Finished refreshing subfolder: {Path}", path);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error refreshing subfolder: {Path}", path);
+                throw;
+            }
+        }
+
+        private Folder? ProcessFolderAndContents(string folderPath, Folder folder, IDirectoryService directoryService)
+        {
+            try
+            {
+                // Create a new Folder instance instead of resolving
+
+                // Get all files and directories in the current folder
+                var entries = directoryService.GetFileSystemEntries(folderPath);
+
+                // TODO: Validate if needed
+                // // Process directories first
+                // foreach (var entry in entries.Where(e => e.IsDirectory))
+                // {
+                //     _ = ProcessFolderAndContents(entry.FullName, folder, directoryService);
+                // }
+
+                // Then process files
+                foreach (var entry in entries.Where(e => !e.IsDirectory))
+                {
+                    // Only resolve paths for files, not for directories
+                    var item = ResolvePath(entry, folder, directoryService);
+
+                    if (item != null)
+                    {
+                        var itemName = GetItemById(item.Id);
+                        if (itemName != null)
+                        {
+                            itemName.Path = item.Path;
+                        }
+
+                        RegisterItem(itemName ?? item);
+                        folder.AddChild(itemName ?? item);
+                    }
+                }
+
+                return folder;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing folder: {Path}", folderPath);
+                return null;
+            }
         }
 
         private async Task PerformLibraryValidation(IProgress<double> progress, CancellationToken cancellationToken)

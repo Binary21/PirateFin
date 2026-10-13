@@ -1,0 +1,16 @@
+{
+    "Providers": {
+        "AniListGraphQlUrl": "https://graphql.anilist.co",
+        "AniListPageSize": 50,
+        "TraktApiUrl": "https://api.trakt.tv",
+        "TraktApiKey": "", // trakt tv api key linked to trakt api application
+        "TraktApiUser": "", // trakt api username in the example: PirateFin (pirateFin@yourmom.com)
+        "YtsApiUrl": "https://movies-api.accel.li", // yts api url, this changes often so you may need to update it
+        "MovieMinimumRating": 7, // fitlers out garbage movies
+        "AllowedShowGenres": [ "action", "adventure", "reality", "drama", "animation", "science-fiction", "romance" ], // allows shows that contain at least one of these genres
+        "BannedShowGenres": [ "documentary", "history", "news", "talk-show", "anime", "children", "game-show" ], // bans shows that contain at least one of these genres, even if they also contain an allowed genre
+        "AllowedShowNetworks": [ "HBO Max", "Netflix", "Hulu", "Disney+", "Apple TV+", "Amazon", "Peacock", "ABC", "Paramount+", "DMAX", "FOX", "Adult Swim" ], // allowed shows from these networks
+        "AllowedLanguages": [ "en" ] // filters out movies in other languages (yts returns a lot of garbage movies)
+        // we automatically ban chinese anime.
+    }
+}

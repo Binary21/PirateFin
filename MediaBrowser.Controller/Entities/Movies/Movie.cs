@@ -4,15 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading;
-using System.Threading.Tasks;
 using Jellyfin.Data.Enums;
-using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
-using Microsoft.Extensions.Logging;
 
 namespace MediaBrowser.Controller.Entities.Movies
 {
@@ -21,6 +18,30 @@ namespace MediaBrowser.Controller.Entities.Movies
     /// </summary>
     public class Movie : Video, IHasSpecialFeatures, IHasTrailers, IHasLookupInfo<MovieInfo>, ISupportsBoxSetGrouping
     {
+        public string DownloadUrl { get; set; } = string.Empty;
+
+        public int? Seeders { get; set; }
+
+        public bool IsDownloadable { get; set; } = false;
+
+        public bool CantDownload { get; set; } = false;
+
+        public override bool CanDelete()
+        {
+            // Generated placeholders have no file on disk; they must survive library validation even after leaving the download queue (Scheduled = false).
+            if (IsPlaceHolder && IsVirtualItem && IsInternet && !string.IsNullOrEmpty(Path) && !File.Exists(Path))
+            {
+                return false;
+            }
+
+            if (IsActiveRecording())
+            {
+                return false;
+            }
+
+            return base.CanDelete();
+        }
+
         /// <inheritdoc />
         [JsonIgnore]
         public IReadOnlyList<Guid> SpecialFeatureIds => GetExtras()

@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading;
 using Jellyfin.Data.Enums;
@@ -35,6 +34,8 @@ namespace MediaBrowser.Controller.Entities.TV
 
         [JsonIgnore]
         public override bool SupportsPeople => true;
+
+        public bool Subscribed { get; set; } = false;
 
         [JsonIgnore]
         public override bool SupportsInheritedParentImages => true;

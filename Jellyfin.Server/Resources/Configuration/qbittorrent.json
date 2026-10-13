@@ -1,0 +1,10 @@
+{
+    "QBitTorrent": {
+        "Url": "", // local url to QBittorent web client
+        "Username": "", // QBittorent client username
+        "Password": "", // QBittorent client password
+        "ExecutablePath": "", // Path to Qbittorent.exe file
+        "SearchPollMs": 1000,
+        "MonitorPollSeconds": 10
+    }
+}

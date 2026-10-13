@@ -522,6 +522,18 @@ dotnet_diagnostic.IDISP007.severity = suggestion
 # disable warning IDISP008: Don't assign member with injected and created disposables
 dotnet_diagnostic.IDISP008.severity = suggestion
 
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = silent
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning
+
+# Default severity for analyzer diagnostics with category 'StyleCop.CSharp.OrderingRules'
+dotnet_analyzer_diagnostic.category-StyleCop.CSharp.OrderingRules.severity = silent
+
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = silent
+
 [tests/**.{cs,vb}]
 # disable warning SA0001: XML comment analysis is disabled due to project configuration
 dotnet_diagnostic.SA0001.severity = none

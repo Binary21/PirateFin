@@ -74,6 +74,12 @@ public class BaseItemEntity
 
     public bool IsInMixedFolder { get; set; }
 
+    public bool IsInternet { get; set; }
+
+    public bool Scheduled { get; set; }
+
+    public bool IsDownloaded { get; set; }
+
     public string? Studios { get; set; }
 
     public string? ExternalServiceId { get; set; }
@@ -109,6 +115,8 @@ public class BaseItemEntity
     public float? NormalizationGain { get; set; }
 
     public bool IsVirtualItem { get; set; }
+
+    public bool Subscribed { get; set; }
 
     public string? SeriesName { get; set; }
 

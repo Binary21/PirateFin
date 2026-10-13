@@ -107,10 +107,13 @@ public static class StreamingHelpers
                                           ?? state.SupportedSubtitleCodecs.FirstOrDefault();
         }
 
-        var item = libraryManager.GetItemById<BaseItem>(streamingRequest.Id)
-            ?? throw new ResourceNotFoundException();
-
-        state.IsInputVideo = item.MediaType == MediaType.Video;
+        var item = libraryManager.GetItemById<BaseItem>(streamingRequest.Id);
+        if (item is null
+            && Guid.TryParse(streamingRequest.MediaSourceId, out var mediaSourceItemId)
+            && !mediaSourceItemId.IsEmpty())
+        {
+            item = libraryManager.GetItemById<BaseItem>(mediaSourceItemId);
+        }
 
         MediaSourceInfo? mediaSource = null;
         if (string.IsNullOrWhiteSpace(streamingRequest.LiveStreamId))
@@ -126,13 +129,24 @@ public static class StreamingHelpers
 
             if (mediaSource is null)
             {
-                var mediaSources = await mediaSourceManager.GetPlaybackMediaSources(libraryManager.GetItemById<BaseItem>(streamingRequest.Id), null, false, false, cancellationToken).ConfigureAwait(false);
+                if (item is null)
+                {
+                    throw new ResourceNotFoundException();
+                }
+
+                var mediaSources = await mediaSourceManager.GetPlaybackMediaSources(item, null, false, false, cancellationToken).ConfigureAwait(false);
+                if (mediaSources.Count == 0)
+                {
+                    throw new ResourceNotFoundException();
+                }
 
                 mediaSource = string.IsNullOrEmpty(streamingRequest.MediaSourceId)
                     ? mediaSources[0]
                     : mediaSources.FirstOrDefault(i => string.Equals(i.Id, streamingRequest.MediaSourceId, StringComparison.Ordinal));
 
-                if (mediaSource is null && Guid.Parse(streamingRequest.MediaSourceId).Equals(streamingRequest.Id))
+                if (mediaSource is null
+                    && Guid.TryParse(streamingRequest.MediaSourceId, out var mediaSourceId)
+                    && mediaSourceId.Equals(streamingRequest.Id))
                 {
                     mediaSource = mediaSources[0];
                 }
@@ -150,6 +164,10 @@ public static class StreamingHelpers
                 streamingRequest.VideoBitRate = Math.Min(streamingRequest.VideoBitRate.Value, mediaSource.FallbackMaxStreamingBitrate.Value);
             }
         }
+
+        state.IsInputVideo = item?.MediaType == MediaType.Video
+            || mediaSource?.VideoStream is not null
+            || state.IsVideoRequest;
 
         var encodingOptions = serverConfigurationManager.GetEncodingOptions();
 

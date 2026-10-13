@@ -107,42 +107,43 @@ public class SeriesMetadataService : MetadataService<Series, SeriesInfo>
         }
     }
 
+    // Remove
     private void RemoveObsoleteSeasons(Series series)
     {
         // TODO Legacy. It's not really "physical" seasons as any virtual seasons are always converted to non-virtual in CreateSeasonsAsync.
-        var physicalSeasonNumbers = new HashSet<int>();
-        var virtualSeasons = new List<Season>();
-        foreach (var existingSeason in series.Children.OfType<Season>())
-        {
-            if (existingSeason.LocationType != LocationType.Virtual && existingSeason.IndexNumber.HasValue)
-            {
-                physicalSeasonNumbers.Add(existingSeason.IndexNumber.Value);
-            }
-            else if (existingSeason.LocationType == LocationType.Virtual)
-            {
-                virtualSeasons.Add(existingSeason);
-            }
-        }
+        // var physicalSeasonNumbers = new HashSet<int>();
+        // var virtualSeasons = new List<Season>();
+        // foreach (var existingSeason in series.Children.OfType<Season>())
+        // {
+        //     if (existingSeason.LocationType != LocationType.Virtual && existingSeason.IndexNumber.HasValue)
+        //     {
+        //         physicalSeasonNumbers.Add(existingSeason.IndexNumber.Value);
+        //     }
+        //     else if (existingSeason.LocationType == LocationType.Virtual)
+        //     {
+        //         virtualSeasons.Add(existingSeason);
+        //     }
+        // }
 
-        foreach (var virtualSeason in virtualSeasons)
-        {
-            var seasonNumber = virtualSeason.IndexNumber;
-            // If there's a physical season with the same number or no episodes in the season, delete it
-            if ((seasonNumber.HasValue && physicalSeasonNumbers.Contains(seasonNumber.Value))
-                || virtualSeason.GetEpisodes().Count == 0)
-            {
-                Logger.LogInformation("Removing virtual season {SeasonNumber} in series {SeriesName}", virtualSeason.IndexNumber, series.Name);
-
-                LibraryManager.DeleteItem(
-                    virtualSeason,
-                    new DeleteOptions
-                    {
-                        // Internal metadata paths are removed regardless of this.
-                        DeleteFileLocation = false
-                    },
-                    false);
-            }
-        }
+        // foreach (var virtualSeason in virtualSeasons)
+        // {
+        //     var seasonNumber = virtualSeason.IndexNumber;
+        //     // If there's a physical season with the same number or no episodes in the season, delete it
+        //     if ((seasonNumber.HasValue && physicalSeasonNumbers.Contains(seasonNumber.Value))
+        //         || virtualSeason.GetEpisodes().Count == 0)
+        //     {
+        //         Logger.LogInformation("Removing virtual season {SeasonNumber} in series {SeriesName}", virtualSeason.IndexNumber, series.Name);
+        //
+        //         LibraryManager.DeleteItem(
+        //             virtualSeason,
+        //             new DeleteOptions
+        //             {
+        //                 // Internal metadata paths are removed regardless of this.
+        //                 DeleteFileLocation = false
+        //             },
+        //             false);
+        //     }
+        // }
     }
 
     private void RemoveObsoleteEpisodes(Series series)
@@ -158,7 +159,8 @@ public class SeriesMetadataService : MetadataService<Series, SeriesInfo>
             List<Episode> physicalEpisodes = [];
             foreach (var episode in seasonEpisodes)
             {
-                if (episode.IsVirtualItem || episode.IsMissingEpisode)
+                // Don't delete internet episodes - they are managed by the subscription system
+                if ((episode.IsVirtualItem && !episode.IsInternet) || (episode.IsMissingEpisode && !episode.IsInternet))
                 {
                     nonPhysicalEpisodes.Add(episode);
                     continue;
@@ -250,6 +252,7 @@ public class SeriesMetadataService : MetadataService<Series, SeriesInfo>
 
         var uniqueSeasonNumbers = seriesChildren
             .OfType<Episode>()
+            .Where(e => e.ParentIndexNumber.HasValue || e.SeasonId.IsEmpty())
             .Where(e => NeedsVirtualSeason(e, physicalSeasonIds, physicalSeasonPathSet))
             .Select(e => e.ParentIndexNumber >= 0 ? e.ParentIndexNumber : null)
             .Distinct();
@@ -279,7 +282,8 @@ public class SeriesMetadataService : MetadataService<Series, SeriesInfo>
         // Loop through episodes
         foreach (var episode in episodes)
         {
-            var season = seasons.FirstOrDefault(i => i.IndexNumber == episode.ParentIndexNumber);
+            var season = seasons.FirstOrDefault(i => i.Id.Equals(episode.SeasonId))
+                ?? seasons.FirstOrDefault(i => i.IndexNumber == episode.ParentIndexNumber);
             if (season is null || episode.SeasonId.Equals(season.Id))
             {
                 continue;

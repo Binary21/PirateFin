@@ -53,6 +53,11 @@ namespace Jellyfin.Server
         /// </summary>
         public const string LoggingConfigFileSystem = "logging.json";
 
+        /// <summary>
+        /// The names of the per-feature configuration files, each seeded from an embedded default when missing.
+        /// </summary>
+        public static readonly string[] FeatureConfigFiles = ["providers.json", "jackett.json", "qbittorrent.json"];
+
         private static readonly SerilogLoggerFactory _loggerFactory = new SerilogLoggerFactory();
         private static SetupServer? _setupServer;
         private static CoreAppHost? _appHost;
@@ -96,6 +101,7 @@ namespace Jellyfin.Server
             Environment.SetEnvironmentVariable("EnableExtendedVaFormats", "1");
 
             await StartupHelpers.InitLoggingConfigFile(appPaths).ConfigureAwait(false);
+            await StartupHelpers.InitFeatureConfigFiles(appPaths).ConfigureAwait(false);
 
             // Create an instance of the application configuration to use for application startup
             IConfiguration startupConfig = CreateAppConfiguration(options, appPaths);
@@ -356,8 +362,19 @@ namespace Jellyfin.Server
                 .AddInMemoryCollection(inMemoryDefaultConfig)
                 .AddJsonFile(LoggingConfigFileDefault, optional: false, reloadOnChange: true)
                 .AddJsonFile(LoggingConfigFileSystem, optional: true, reloadOnChange: true)
+                .AddFeatureConfigFiles()
                 .AddEnvironmentVariables("JELLYFIN_")
                 .AddInMemoryCollection(commandLineOpts.ConvertToConfig());
+        }
+
+        private static IConfigurationBuilder AddFeatureConfigFiles(this IConfigurationBuilder config)
+        {
+            foreach (var file in FeatureConfigFiles)
+            {
+                config.AddJsonFile(file, optional: true, reloadOnChange: true);
+            }
+
+            return config;
         }
 
         private static void PrepareDatabaseProvider(IServiceProvider services)
