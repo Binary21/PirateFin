@@ -54,15 +54,6 @@ namespace MediaBrowser.Controller.Providers
         Task RefreshFullItem(BaseItem item, MetadataRefreshOptions options, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Refreshes the full items parallely.
-        /// </summary>
-        /// <param name="items">The item.</param>
-        /// <param name="options">The options.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Task.</returns>
-        Task RefreshFullItems(List<BaseItem> items, MetadataRefreshOptions options, CancellationToken cancellationToken);
-
-        /// <summary>
         /// Refreshes the metadata.
         /// </summary>
         /// <param name="item">The item.</param>

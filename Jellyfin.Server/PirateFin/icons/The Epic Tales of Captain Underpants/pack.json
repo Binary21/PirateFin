@@ -1,0 +1,18 @@
+{
+  "Name": "The Epic Tales of Captain Underpants",
+  "Order": 55,
+  "Icons": [
+    {
+      "File": "001-captain-underpants.png",
+      "Title": "Captain Underpants"
+    },
+    {
+      "File": "002-harold.png",
+      "Title": "Harold"
+    },
+    {
+      "File": "003-principal-krupp.png",
+      "Title": "Principal Krupp"
+    }
+  ]
+}

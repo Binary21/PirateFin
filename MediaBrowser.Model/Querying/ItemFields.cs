@@ -250,10 +250,6 @@ namespace MediaBrowser.Model.Querying
         /// </summary>
         SpecialFeatureCount,
 
-        Name,
-
-        IsInterent,
-        IsPlaceholder,
-        IsDownloadable
+        Name
     }
 }

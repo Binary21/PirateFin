@@ -1,0 +1,38 @@
+{
+  "Name": "Trollhunters: Tales of Arcadia",
+  "Order": 32,
+  "Icons": [
+    {
+      "File": "001-jim.png",
+      "Title": "Jim"
+    },
+    {
+      "File": "002-claire.png",
+      "Title": "Claire"
+    },
+    {
+      "File": "003-toby.png",
+      "Title": "Toby"
+    },
+    {
+      "File": "004-blinky.png",
+      "Title": "Blinky"
+    },
+    {
+      "File": "005-aaarrrgghh.png",
+      "Title": "AAARRRGGHH!!!"
+    },
+    {
+      "File": "006-draal.png",
+      "Title": "Draal"
+    },
+    {
+      "File": "007-gnome-chompsky.png",
+      "Title": "Gnome Chompsky"
+    },
+    {
+      "File": "008-amulet.png",
+      "Title": "Amulet"
+    }
+  ]
+}

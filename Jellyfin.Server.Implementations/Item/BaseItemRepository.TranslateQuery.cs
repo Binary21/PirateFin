@@ -911,9 +911,8 @@ public sealed partial class BaseItemRepository
             }
             else
             {
-                // Scheduled internet placeholders stay virtual until downloaded, but they aren't "missing" episodes and should still be shown.
-                // Also show internet items even if not scheduled (e.g., after CantDownload is set).
-                baseQuery = baseQuery.Where(e => !e.IsVirtualItem || e.Scheduled || e.IsInternet || (e.Data != null && (e.Data.Contains("Scheduled\":true") || e.Data.Contains("IsInternet\":true") || e.Data.Contains("CantDownload\":true"))));
+                // PirateFin placeholders stay virtual until downloaded, but they aren't "missing" episodes and should still be shown.
+                baseQuery = baseQuery.Where(e => !e.IsVirtualItem || e.IsInternet);
             }
         }
 
@@ -1128,22 +1127,14 @@ public sealed partial class BaseItemRepository
                 : baseQuery.WhereNeitherItemNorDescendantMatches(context, isPlaceHolder);
         }
 
-        if (filter.IsDownloadable)
-        {
-            Expression<Func<BaseItemEntity, bool>> isDownloadable = e => e.Data!.Contains("IsDownloadable\":true");
-            baseQuery = baseQuery.WhereItemOrDescendantMatches(context, isDownloadable);
-        }
-
-        if (filter.CantDownload)
-        {
-            Expression<Func<BaseItemEntity, bool>> cantDownload = e => e.Data!.Contains("CantDownload\":true");
-            baseQuery = baseQuery.WhereItemOrDescendantMatches(context, cantDownload);
-        }
-
         if (filter.Scheduled)
         {
-            Expression<Func<BaseItemEntity, bool>> scheduled = e => e.Scheduled || (e.Data != null && e.Data.Contains("Scheduled\":true"));
-            baseQuery = baseQuery.WhereItemOrDescendantMatches(context, scheduled);
+            baseQuery = baseQuery.Where(e => e.Scheduled);
+        }
+
+        if (filter.IsInternet.HasValue)
+        {
+            baseQuery = baseQuery.Where(e => e.IsInternet == filter.IsInternet.Value);
         }
 
         if (filter.HasSpecialFeature.HasValue)

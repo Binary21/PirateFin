@@ -1,0 +1,58 @@
+{
+  "Name": "Carmen Sandiego",
+  "Order": 44,
+  "Icons": [
+    {
+      "File": "001-carmen-sandiego.png",
+      "Title": "Carmen Sandiego"
+    },
+    {
+      "File": "002-player.png",
+      "Title": "Player"
+    },
+    {
+      "File": "003-ivy.png",
+      "Title": "Ivy"
+    },
+    {
+      "File": "004-zack.png",
+      "Title": "Zack"
+    },
+    {
+      "File": "005-crackle.png",
+      "Title": "Crackle"
+    },
+    {
+      "File": "006-shadowsan.png",
+      "Title": "Shadowsan"
+    },
+    {
+      "File": "007-coach-brunt.png",
+      "Title": "Coach Brunt"
+    },
+    {
+      "File": "008-agent-devineaux.png",
+      "Title": "Agent Devineaux"
+    },
+    {
+      "File": "009-agent-argent.png",
+      "Title": "Agent Argent"
+    },
+    {
+      "File": "010-tigress.png",
+      "Title": "Tigress"
+    },
+    {
+      "File": "011-le-chevre.png",
+      "Title": "Le Chevre"
+    },
+    {
+      "File": "012-el-topo.png",
+      "Title": "El Topo"
+    },
+    {
+      "File": "013-carmen-s-hat.png",
+      "Title": "Carmen's Hat"
+    }
+  ]
+}

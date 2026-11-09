@@ -1,0 +1,34 @@
+{
+  "Name": "Family Pack",
+  "Order": 25,
+  "Icons": [
+    {
+      "File": "001-the-dad.png",
+      "Title": "The Dad"
+    },
+    {
+      "File": "002-the-hunter.png",
+      "Title": "The Hunter"
+    },
+    {
+      "File": "003-the-witch.png",
+      "Title": "The Witch"
+    },
+    {
+      "File": "004-the-little-girl.png",
+      "Title": "The Little Girl"
+    },
+    {
+      "File": "005-the-werewolf.png",
+      "Title": "The Werewolf"
+    },
+    {
+      "File": "006-the-thief.png",
+      "Title": "The Thief"
+    },
+    {
+      "File": "007-the-tile.png",
+      "Title": "The Tile"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "Name": "The Witcher",
+  "Order": 35,
+  "Icons": [
+    {
+      "File": "001-geralt.png",
+      "Title": "Geralt",
+      "Season": "Season 3"
+    },
+    {
+      "File": "002-ciri.png",
+      "Title": "Ciri",
+      "Season": "Season 3"
+    },
+    {
+      "File": "003-yennefer.png",
+      "Title": "Yennefer",
+      "Season": "Season 3"
+    },
+    {
+      "File": "004-jaskier.png",
+      "Title": "Jaskier",
+      "Season": "Season 3"
+    },
+    {
+      "File": "005-roach-horse.png",
+      "Title": "Roach (Horse)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "006-harpy-sword.png",
+      "Title": "Harpy Sword",
+      "Season": "Season 3"
+    },
+    {
+      "File": "007-kikimora.png",
+      "Title": "Kikimora",
+      "Season": "Season 3"
+    },
+    {
+      "File": "008-leshy.png",
+      "Title": "Leshy",
+      "Season": "Season 3"
+    },
+    {
+      "File": "009-nivellen.png",
+      "Title": "Nivellen",
+      "Season": "Season 3"
+    },
+    {
+      "File": "010-witcher-logo.png",
+      "Title": "Witcher Logo",
+      "Season": "Season 3"
+    },
+    {
+      "File": "011-two-swords.png",
+      "Title": "Two Swords",
+      "Season": "Season 3"
+    },
+    {
+      "File": "012-geralt.png",
+      "Title": "Geralt",
+      "Season": "Season 4"
+    },
+    {
+      "File": "013-ciri.png",
+      "Title": "Ciri",
+      "Season": "Season 4"
+    },
+    {
+      "File": "014-yennefer.png",
+      "Title": "Yennefer",
+      "Season": "Season 4"
+    },
+    {
+      "File": "015-jaskier.png",
+      "Title": "Jaskier",
+      "Season": "Season 4"
+    },
+    {
+      "File": "016-roach.png",
+      "Title": "Roach",
+      "Season": "Season 4"
+    },
+    {
+      "File": "017-grondo.png",
+      "Title": "Grondo",
+      "Season": "Season 4"
+    },
+    {
+      "File": "018-wraith.png",
+      "Title": "Wraith",
+      "Season": "Season 4"
+    },
+    {
+      "File": "019-wolf-medallion.png",
+      "Title": "Wolf Medallion",
+      "Season": "Season 4"
+    }
+  ]
+}

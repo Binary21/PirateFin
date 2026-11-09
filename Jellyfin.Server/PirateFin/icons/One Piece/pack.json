@@ -1,0 +1,62 @@
+{
+  "Name": "One Piece",
+  "Order": 36,
+  "Icons": [
+    {
+      "File": "001-going-merry.png",
+      "Title": "Going Merry"
+    },
+    {
+      "File": "002-luffy.png",
+      "Title": "Luffy"
+    },
+    {
+      "File": "003-nami.png",
+      "Title": "Nami"
+    },
+    {
+      "File": "004-zoro.png",
+      "Title": "Zoro"
+    },
+    {
+      "File": "005-usopp.png",
+      "Title": "Usopp"
+    },
+    {
+      "File": "006-sanji.png",
+      "Title": "Sanji"
+    },
+    {
+      "File": "007-jolly-roger.png",
+      "Title": "Jolly Roger"
+    },
+    {
+      "File": "008-shanks.png",
+      "Title": "Shanks"
+    },
+    {
+      "File": "009-mihawk.png",
+      "Title": "Mihawk"
+    },
+    {
+      "File": "010-koby.png",
+      "Title": "Koby"
+    },
+    {
+      "File": "011-garp.png",
+      "Title": "Garp"
+    },
+    {
+      "File": "012-arlong.png",
+      "Title": "Arlong"
+    },
+    {
+      "File": "013-buggy.png",
+      "Title": "Buggy"
+    },
+    {
+      "File": "014-den-den-mushi.png",
+      "Title": "Den Den Mushi"
+    }
+  ]
+}

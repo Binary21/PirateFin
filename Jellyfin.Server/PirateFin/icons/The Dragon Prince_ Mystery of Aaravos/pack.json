@@ -1,0 +1,54 @@
+{
+  "Name": "The Dragon Prince: Mystery of Aaravos",
+  "Order": 31,
+  "Icons": [
+    {
+      "File": "001-bait.png",
+      "Title": "Bait"
+    },
+    {
+      "File": "002-zym.png",
+      "Title": "Zym"
+    },
+    {
+      "File": "003-ezran.png",
+      "Title": "Ezran"
+    },
+    {
+      "File": "004-rayla.png",
+      "Title": "Rayla"
+    },
+    {
+      "File": "005-callum.png",
+      "Title": "Callum"
+    },
+    {
+      "File": "006-claudia.png",
+      "Title": "Claudia"
+    },
+    {
+      "File": "007-soren.png",
+      "Title": "Soren"
+    },
+    {
+      "File": "008-general-amaya.png",
+      "Title": "General Amaya"
+    },
+    {
+      "File": "009-thunder.png",
+      "Title": "Thunder"
+    },
+    {
+      "File": "010-viren.png",
+      "Title": "Viren"
+    },
+    {
+      "File": "011-king-harrow.png",
+      "Title": "King Harrow"
+    },
+    {
+      "File": "012-runaan.png",
+      "Title": "Runaan"
+    }
+  ]
+}

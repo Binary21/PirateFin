@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ using MediaBrowser.Controller.Drawing;
 using MediaBrowser.Controller.Events;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Net;
+using MediaBrowser.Controller.PirateFin;
 using MediaBrowser.Model.Configuration;
 using MediaBrowser.Model.Dto;
 using MediaBrowser.Model.Users;
@@ -449,7 +451,10 @@ namespace Jellyfin.Server.Implementations.Users
                     InvalidLoginAttemptCount = user.InvalidLoginAttemptCount,
                     LoginAttemptsBeforeLockout = user.LoginAttemptsBeforeLockout ?? -1,
                     MaxActiveSessions = user.MaxActiveSessions,
-                    IsAdministrator = user.HasPermission(PermissionKind.IsAdministrator),
+                    // PirateFin: away from home an admin is an ordinary user (unless allowed), so apps hide the dashboard.
+                    IsAdministrator = user.HasPermission(PermissionKind.IsAdministrator)
+                        && !(IPAddress.TryParse(remoteEndPoint, out var remoteIp)
+                            && RemoteAdminAccess.IsBlocked(_networkManager, _serverConfigurationManager.Configuration, remoteIp)),
                     IsHidden = user.HasPermission(PermissionKind.IsHidden),
                     IsDisabled = user.HasPermission(PermissionKind.IsDisabled),
                     EnableSharedDeviceControl = user.HasPermission(PermissionKind.EnableSharedDeviceControl),
@@ -501,6 +506,7 @@ namespace Jellyfin.Server.Implementations.Users
             }
 
             bool success;
+            var usedTemporaryPassword = false;
             var user = GetUserByName(username);
             using (await _userLock.LockAsync(user?.Id ?? Guid.Empty).ConfigureAwait(false))
             {
@@ -518,6 +524,13 @@ namespace Jellyfin.Server.Implementations.Users
                     .ConfigureAwait(false);
                 var authenticationProvider = authResult.AuthenticationProvider;
                 success = authResult.Success;
+
+                // PirateFin: an emailed temporary password also signs in; it becomes the password below.
+                if (!success && user is not null && _appHost.Resolve<ITemporaryPasswords>()?.TryRedeem(user.Id, password) == true)
+                {
+                    success = true;
+                    usedTemporaryPassword = true;
+                }
 
                 if (success && user is not null)
                 {
@@ -650,6 +663,13 @@ namespace Jellyfin.Server.Implementations.Users
                         user.Username,
                         remoteEndPoint);
                 }
+            }
+
+            // Outside the lock: ChangePassword takes it too.
+            if (success && usedTemporaryPassword)
+            {
+                await ChangePassword(user.Id, password).ConfigureAwait(false);
+                _logger.LogInformation("{UserName} signed in with a temporary password, which is now their password.", user.Username);
             }
 
             return success ? user : null;

@@ -1,0 +1,30 @@
+{
+  "Name": "Ask the StoryBots",
+  "Order": 24,
+  "Icons": [
+    {
+      "File": "001-beep-green.png",
+      "Title": "Beep Green"
+    },
+    {
+      "File": "002-bo-purple.png",
+      "Title": "Bo Purple"
+    },
+    {
+      "File": "003-bang-blue.png",
+      "Title": "Bang Blue"
+    },
+    {
+      "File": "004-bing-yellow.png",
+      "Title": "Bing Yellow"
+    },
+    {
+      "File": "005-boop-red.png",
+      "Title": "Boop Red"
+    },
+    {
+      "File": "006-hap.png",
+      "Title": "Hap"
+    }
+  ]
+}

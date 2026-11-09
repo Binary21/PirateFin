@@ -36,6 +36,9 @@ namespace MediaBrowser.Model.Session
         ActivityLogEntry,
         ScheduledTasksInfo,
 
+        // PirateFin: a watched item's download status (to the connections that asked for it).
+        PirateFinDownloadProgress,
+
         // Client -> Server
         ActivityLogEntryStart,
         ActivityLogEntryStop,
@@ -43,6 +46,12 @@ namespace MediaBrowser.Model.Session
         SessionsStop,
         ScheduledTasksInfoStart,
         ScheduledTasksInfoStop,
+
+        // PirateFin: start / stop following an item's download (data: the item id). Start follows it until it's
+        // playable (a Play button); Follow until it's fully downloaded (the player, watching the downloaded edge).
+        PirateFinDownloadStart,
+        PirateFinDownloadStop,
+        PirateFinDownloadFollow,
 
         // Shared
         KeepAlive,

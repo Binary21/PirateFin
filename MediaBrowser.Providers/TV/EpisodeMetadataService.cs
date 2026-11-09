@@ -85,10 +85,16 @@ public class EpisodeMetadataService : MetadataService<Episode, EpisodeInfo>
     /// <inheritdoc />
     protected override void MergeData(MetadataResult<Episode> source, MetadataResult<Episode> target, MetadataField[] lockedFields, bool replaceData, bool mergeMetadataSettings)
     {
-        base.MergeData(source, target, lockedFields, replaceData, mergeMetadataSettings);
-
         var sourceItem = source.Item;
         var targetItem = target.Item;
+
+        // PirateFin episodes keep the numbers Trakt / AniList gave them when the metadata is replaced; a provider
+        // without a match would clear them (and a series refresh would then add an empty "Season Unknown").
+        var keptNumbers = targetItem.IsPirateFinEpisode && targetItem.IndexNumber.HasValue && targetItem.ParentIndexNumber.HasValue
+            ? (Index: targetItem.IndexNumber, IndexEnd: targetItem.IndexNumberEnd, Season: targetItem.ParentIndexNumber)
+            : default((int? Index, int? IndexEnd, int? Season)?);
+
+        base.MergeData(source, target, lockedFields, replaceData, mergeMetadataSettings);
 
         if (replaceData || !targetItem.AirsBeforeSeasonNumber.HasValue)
         {
@@ -118,6 +124,13 @@ public class EpisodeMetadataService : MetadataService<Episode, EpisodeInfo>
             && targetItem.ParentIndexNumber != sourceItem.ParentIndexNumber)
         {
             targetItem.ParentIndexNumber = sourceItem.ParentIndexNumber;
+        }
+
+        if (keptNumbers is { } kept)
+        {
+            targetItem.IndexNumber = kept.Index;
+            targetItem.IndexNumberEnd = kept.IndexEnd;
+            targetItem.ParentIndexNumber = kept.Season;
         }
     }
 }

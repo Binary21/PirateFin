@@ -1,0 +1,22 @@
+{
+  "Name": "Spirit Riding Free",
+  "Order": 22,
+  "Icons": [
+    {
+      "File": "001-spirit.png",
+      "Title": "Spirit"
+    },
+    {
+      "File": "002-lucky.png",
+      "Title": "Lucky"
+    },
+    {
+      "File": "003-pru.png",
+      "Title": "Pru"
+    },
+    {
+      "File": "004-abigail.png",
+      "Title": "Abigail"
+    }
+  ]
+}

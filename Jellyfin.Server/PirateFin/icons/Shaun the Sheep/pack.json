@@ -1,0 +1,34 @@
+{
+  "Name": "Shaun the Sheep",
+  "Order": 19,
+  "Icons": [
+    {
+      "File": "001-shaun.png",
+      "Title": "Shaun"
+    },
+    {
+      "File": "002-bitzer.png",
+      "Title": "Bitzer"
+    },
+    {
+      "File": "003-farmer.png",
+      "Title": "Farmer"
+    },
+    {
+      "File": "004-timmy.png",
+      "Title": "Timmy"
+    },
+    {
+      "File": "005-shirley.png",
+      "Title": "Shirley"
+    },
+    {
+      "File": "006-pig.png",
+      "Title": "Pig"
+    },
+    {
+      "File": "007-stash.png",
+      "Title": "Stash"
+    }
+  ]
+}

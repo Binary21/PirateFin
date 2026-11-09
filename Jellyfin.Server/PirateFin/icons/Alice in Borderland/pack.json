@@ -1,0 +1,54 @@
+{
+  "Name": "Alice in Borderland",
+  "Order": 42,
+  "Icons": [
+    {
+      "File": "001-arisu.png",
+      "Title": "Arisu"
+    },
+    {
+      "File": "002-usagi.png",
+      "Title": "Usagi"
+    },
+    {
+      "File": "003-banda.png",
+      "Title": "Banda"
+    },
+    {
+      "File": "004-ann.png",
+      "Title": "Ann"
+    },
+    {
+      "File": "005-yaba.png",
+      "Title": "Yaba"
+    },
+    {
+      "File": "006-tetsu.png",
+      "Title": "Tetsu"
+    },
+    {
+      "File": "007-sachiko.png",
+      "Title": "Sachiko"
+    },
+    {
+      "File": "008-kazuya.png",
+      "Title": "Kazuya"
+    },
+    {
+      "File": "009-rei.png",
+      "Title": "Rei"
+    },
+    {
+      "File": "010-chishiya.png",
+      "Title": "Chishiya"
+    },
+    {
+      "File": "011-the-watchman.png",
+      "Title": "The Watchman"
+    },
+    {
+      "File": "012-joker.png",
+      "Title": "Joker"
+    }
+  ]
+}

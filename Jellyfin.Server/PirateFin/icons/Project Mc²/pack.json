@@ -1,0 +1,18 @@
+{
+  "Name": "Project Mc²",
+  "Order": 54,
+  "Icons": [
+    {
+      "File": "001-adisn.png",
+      "Title": "ADISN"
+    },
+    {
+      "File": "002-ember.png",
+      "Title": "Ember"
+    },
+    {
+      "File": "003-mckeyla.png",
+      "Title": "McKeyla"
+    }
+  ]
+}

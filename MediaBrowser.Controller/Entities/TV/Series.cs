@@ -35,6 +35,12 @@ namespace MediaBrowser.Controller.Entities.TV
 
         public string AirTime { get; set; }
 
+        /// <summary>
+        /// Gets or sets the title an admin set for torrent searches (PirateFin). Empty uses the default titles.
+        /// Only the Jackett search uses it; the displayed name is unchanged.
+        /// </summary>
+        public string SearchTitleOverride { get; set; } = string.Empty;
+
         [JsonIgnore]
         public override bool SupportsAddingToPlaylist => true;
 

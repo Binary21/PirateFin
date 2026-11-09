@@ -1,0 +1,70 @@
+{
+  "Name": "My Melody & Kuromi",
+  "Order": 30,
+  "Icons": [
+    {
+      "File": "001-my-melody.png",
+      "Title": "My Melody"
+    },
+    {
+      "File": "002-starry-eyes-mm.png",
+      "Title": "Starry Eyes MM"
+    },
+    {
+      "File": "003-sleep-mask-mm.png",
+      "Title": "Sleep Mask MM"
+    },
+    {
+      "File": "004-smile-kuromi.png",
+      "Title": "Smile Kuromi"
+    },
+    {
+      "File": "005-angry-kuromi.png",
+      "Title": "Angry Kuromi"
+    },
+    {
+      "File": "006-mischievous-kuromi.png",
+      "Title": "Mischievous Kuromi"
+    },
+    {
+      "File": "007-flat.png",
+      "Title": "Flat"
+    },
+    {
+      "File": "008-my-sweet-piano.png",
+      "Title": "My Sweet Piano"
+    },
+    {
+      "File": "009-mr-pistachio.png",
+      "Title": "Mr. Pistachio"
+    },
+    {
+      "File": "010-sasage.png",
+      "Title": "Sasage"
+    },
+    {
+      "File": "011-tanba.png",
+      "Title": "Tanba"
+    },
+    {
+      "File": "012-mr-heart.png",
+      "Title": "Mr. Heart"
+    },
+    {
+      "File": "013-cloud-king.png",
+      "Title": "Cloud King"
+    },
+    {
+      "File": "014-hamster.png",
+      "Title": "Hamster"
+    },
+    {
+      "File": "015-sloth.png",
+      "Title": "Sloth"
+    },
+    {
+      "File": "016-harinezumi.png",
+      "Title": "Harinezumi"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "Name": "Voltron: Legendary Defender",
+  "Order": 14,
+  "Icons": [
+    {
+      "File": "001-keith-red-lion.png",
+      "Title": "Keith (Red Lion)"
+    },
+    {
+      "File": "002-lance-blue-lion.png",
+      "Title": "Lance (Blue Lion)"
+    },
+    {
+      "File": "003-pidge-green-lion.png",
+      "Title": "Pidge (Green Lion)"
+    },
+    {
+      "File": "004-allura.png",
+      "Title": "Allura"
+    },
+    {
+      "File": "005-shiro-black-lion.png",
+      "Title": "Shiro (Black Lion)"
+    },
+    {
+      "File": "006-haggar.png",
+      "Title": "Haggar"
+    },
+    {
+      "File": "007-voltron.png",
+      "Title": "Voltron"
+    },
+    {
+      "File": "008-hunk-yellow-lion.png",
+      "Title": "Hunk (Yellow Lion)"
+    }
+  ]
+}

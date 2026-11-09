@@ -1,0 +1,74 @@
+{
+  "Name": "Aggretsuko",
+  "Order": 8,
+  "Icons": [
+    {
+      "File": "001-death-metal-retsuko.png",
+      "Title": "Death Metal Retsuko"
+    },
+    {
+      "File": "002-retsuko.png",
+      "Title": "Retsuko"
+    },
+    {
+      "File": "003-haida.png",
+      "Title": "Haida"
+    },
+    {
+      "File": "004-feneko.png",
+      "Title": "Feneko"
+    },
+    {
+      "File": "005-washimi.png",
+      "Title": "Washimi"
+    },
+    {
+      "File": "006-gori.png",
+      "Title": "Gori"
+    },
+    {
+      "File": "007-tadano.png",
+      "Title": "Tadano"
+    },
+    {
+      "File": "008-kabae.png",
+      "Title": "Kabae"
+    },
+    {
+      "File": "009-anai.png",
+      "Title": "Anai"
+    },
+    {
+      "File": "010-tsunoda.png",
+      "Title": "Tsunoda"
+    },
+    {
+      "File": "011-tsubone.png",
+      "Title": "Tsubone"
+    },
+    {
+      "File": "012-ton.png",
+      "Title": "Ton"
+    },
+    {
+      "File": "013-komiya.png",
+      "Title": "Komiya"
+    },
+    {
+      "File": "014-resasuke.png",
+      "Title": "Resasuke"
+    },
+    {
+      "File": "015-puko.png",
+      "Title": "Puko"
+    },
+    {
+      "File": "016-retsuko-s-mother.png",
+      "Title": "Retsuko's Mother"
+    },
+    {
+      "File": "017-karaoke-microphone.png",
+      "Title": "Karaoke Microphone"
+    }
+  ]
+}

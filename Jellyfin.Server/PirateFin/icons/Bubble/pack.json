@@ -1,0 +1,58 @@
+{
+  "Name": "Bubble",
+  "Order": 46,
+  "Icons": [
+    {
+      "File": "001-bubble.png",
+      "Title": "Bubble"
+    },
+    {
+      "File": "002-uta.png",
+      "Title": "Uta"
+    },
+    {
+      "File": "003-hibiki.png",
+      "Title": "Hibiki"
+    },
+    {
+      "File": "004-makoto.png",
+      "Title": "Makoto"
+    },
+    {
+      "File": "005-shin.png",
+      "Title": "Shin"
+    },
+    {
+      "File": "006-kai.png",
+      "Title": "Kai"
+    },
+    {
+      "File": "007-usagi.png",
+      "Title": "Usagi"
+    },
+    {
+      "File": "008-isozaki.png",
+      "Title": "Isozaki"
+    },
+    {
+      "File": "009-osawa.png",
+      "Title": "Osawa"
+    },
+    {
+      "File": "010-denki-ninja.png",
+      "Title": "Denki Ninja"
+    },
+    {
+      "File": "011-undertaker.png",
+      "Title": "Undertaker"
+    },
+    {
+      "File": "012-kanto-mad-lobster.png",
+      "Title": "Kanto Mad Lobster"
+    },
+    {
+      "File": "013-checkered-flag.png",
+      "Title": "Checkered Flag"
+    }
+  ]
+}

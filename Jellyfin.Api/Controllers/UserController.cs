@@ -596,7 +596,8 @@ public class UserController : BaseJellyfinApiController
             return BadRequest();
         }
 
-        return _userManager.GetUserDto(user);
+        // PirateFin: with the caller's address, so an admin away from home isn't shown as one.
+        return _userManager.GetUserDto(user, HttpContext.GetNormalizedRemoteIP().ToString());
     }
 
     private IEnumerable<UserDto> Get(bool? isHidden, bool? isDisabled, bool filterByDevice, bool filterByNetwork)

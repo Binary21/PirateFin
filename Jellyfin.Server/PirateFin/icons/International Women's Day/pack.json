@@ -1,0 +1,10 @@
+{
+  "Name": "International Women's Day",
+  "Order": 2,
+  "Icons": [
+    {
+      "File": "001-taylor-swift.png",
+      "Title": "Taylor Swift"
+    }
+  ]
+}

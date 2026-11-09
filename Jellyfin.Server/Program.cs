@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CommandLine;
 using Emby.Server.Implementations;
 using Emby.Server.Implementations.Configuration;
+using Emby.Server.Implementations.PirateFin;
 using Emby.Server.Implementations.Serialization;
 using Jellyfin.Database.Implementations;
 using Jellyfin.Server.Extensions;
@@ -56,7 +57,7 @@ namespace Jellyfin.Server
         /// <summary>
         /// The names of the per-feature configuration files, each seeded from an embedded default when missing.
         /// </summary>
-        public static readonly string[] FeatureConfigFiles = ["providers.json", "jackett.json", "qbittorrent.json"];
+        public static readonly IReadOnlyList<string> FeatureConfigFiles = PirateFinConfigurationStore.Files;
 
         private static readonly SerilogLoggerFactory _loggerFactory = new SerilogLoggerFactory();
         private static SetupServer? _setupServer;

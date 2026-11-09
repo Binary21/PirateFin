@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoFixture;
@@ -9,8 +10,11 @@ using Jellyfin.Api.Constants;
 using Jellyfin.Data;
 using Jellyfin.Database.Implementations.Entities;
 using Jellyfin.Database.Implementations.Enums;
+using MediaBrowser.Common.Net;
 using MediaBrowser.Controller.Authentication;
+using MediaBrowser.Controller.Configuration;
 using MediaBrowser.Controller.Net;
+using MediaBrowser.Model.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -26,6 +30,8 @@ namespace Jellyfin.Api.Tests.Auth
         private readonly IFixture _fixture;
 
         private readonly Mock<IAuthService> _jellyfinAuthServiceMock;
+        private readonly Mock<INetworkManager> _networkManagerMock;
+        private readonly ServerConfiguration _configuration = new();
 
         private readonly CustomAuthenticationHandler _sut;
         private readonly AuthenticationScheme _scheme;
@@ -45,6 +51,13 @@ namespace Jellyfin.Api.Tests.Auth
             var serviceProviderMock = _fixture.Freeze<Mock<IServiceProvider>>();
             var authenticationServiceMock = _fixture.Freeze<Mock<IAuthenticationService>>();
             _fixture.Register<ILoggerFactory>(() => new NullLoggerFactory());
+
+            // PirateFin: admins outside the home network lose their rights unless allowed.
+            // Plain mocks: AutoFixture can't fill in their members (IPNetwork).
+            _networkManagerMock = new Mock<INetworkManager>();
+            _networkManagerMock.Setup(n => n.IsInLocalNetwork(It.IsAny<IPAddress>())).Returns(true);
+            _fixture.Inject(_networkManagerMock.Object);
+            _fixture.Inject(Mock.Of<IServerConfigurationManager>(c => c.Configuration == _configuration));
 
             serviceProviderMock.Setup(s => s.GetService(typeof(IAuthenticationService)))
                 .Returns(authenticationServiceMock.Object);
@@ -115,6 +128,20 @@ namespace Jellyfin.Api.Tests.Auth
 
             Assert.NotNull(authorizationInfo.User);
             var expectedRole = authorizationInfo.User.HasPermission(PermissionKind.IsAdministrator) ? UserRoles.Administrator : UserRoles.User;
+            Assert.True(authenticateResult.Principal?.HasClaim(ClaimTypes.Role, expectedRole));
+        }
+
+        [Theory]
+        [InlineData(false, UserRoles.User)]
+        [InlineData(true, UserRoles.Administrator)]
+        public async Task HandleAuthenticateAsync_AdminAwayFromHome_IsAdminOnlyWhenAllowed(bool allowRemoteAdmin, string expectedRole)
+        {
+            _networkManagerMock.Setup(n => n.IsInLocalNetwork(It.IsAny<IPAddress>())).Returns(false);
+            _configuration.AllowRemoteAdminAccess = allowRemoteAdmin;
+            SetupUser(isAdmin: true);
+
+            var authenticateResult = await _sut.AuthenticateAsync();
+
             Assert.True(authenticateResult.Principal?.HasClaim(ClaimTypes.Role, expectedRole));
         }
 

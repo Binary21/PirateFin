@@ -1,0 +1,34 @@
+{
+  "Name": "She-Ra and the Princesses of Power",
+  "Order": 13,
+  "Icons": [
+    {
+      "File": "001-she-ra.png",
+      "Title": "She-Ra"
+    },
+    {
+      "File": "002-adora.png",
+      "Title": "Adora"
+    },
+    {
+      "File": "003-swift-wind.png",
+      "Title": "Swift Wind"
+    },
+    {
+      "File": "004-catra.png",
+      "Title": "Catra"
+    },
+    {
+      "File": "005-bow.png",
+      "Title": "Bow"
+    },
+    {
+      "File": "006-glimmer.png",
+      "Title": "Glimmer"
+    },
+    {
+      "File": "007-shadow-weaver.png",
+      "Title": "Shadow Weaver"
+    }
+  ]
+}

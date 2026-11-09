@@ -1,0 +1,38 @@
+{
+  "Name": "Lucifer",
+  "Order": 52,
+  "Icons": [
+    {
+      "File": "001-lucifer.png",
+      "Title": "Lucifer"
+    },
+    {
+      "File": "002-chloe.png",
+      "Title": "Chloe"
+    },
+    {
+      "File": "003-maze.png",
+      "Title": "Maze"
+    },
+    {
+      "File": "004-amenadiel.png",
+      "Title": "Amenadiel"
+    },
+    {
+      "File": "005-linda.png",
+      "Title": "Linda"
+    },
+    {
+      "File": "006-dan.png",
+      "Title": "Dan"
+    },
+    {
+      "File": "007-ella.png",
+      "Title": "Ella"
+    },
+    {
+      "File": "008-lucifer-devil-face.png",
+      "Title": "Lucifer (Devil Face)"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "Name": "KPop Demon Hunters",
+  "Order": 27,
+  "Icons": [
+    {
+      "File": "001-rumi.png",
+      "Title": "Rumi"
+    },
+    {
+      "File": "002-mira.png",
+      "Title": "Mira"
+    },
+    {
+      "File": "003-zoey.png",
+      "Title": "Zoey"
+    },
+    {
+      "File": "004-jinu.png",
+      "Title": "Jinu"
+    },
+    {
+      "File": "005-abby-saja.png",
+      "Title": "Abby Saja"
+    },
+    {
+      "File": "006-mystery-saja.png",
+      "Title": "Mystery Saja"
+    },
+    {
+      "File": "007-baby-saja.png",
+      "Title": "Baby Saja"
+    },
+    {
+      "File": "008-romance-saja.png",
+      "Title": "Romance Saja"
+    },
+    {
+      "File": "009-bobby.png",
+      "Title": "Bobby"
+    },
+    {
+      "File": "010-sussie.png",
+      "Title": "Sussie"
+    },
+    {
+      "File": "011-derpy.png",
+      "Title": "Derpy"
+    }
+  ]
+}

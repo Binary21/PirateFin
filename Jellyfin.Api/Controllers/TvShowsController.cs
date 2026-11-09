@@ -347,13 +347,13 @@ public class TvShowsController : BaseJellyfinApiController
             return NotFound();
         }
 
-        var seasons = item.Children.ToList();
-        item.GetItemList(new InternalItemsQuery(user)
-        {
-            IsMissing = isMissing,
-            IsSpecialSeason = isSpecialSeason,
-            AdjacentTo = adjacentTo
-        });
+        // Read the children directly: PirateFin placeholder seasons are not found by the presentation key query
+        // Series.GetItemList uses for seasons.
+        var seasons = item.Children
+            .OfType<Season>()
+            .Where(s => !isSpecialSeason.HasValue || (s.IndexNumber == 0) == isSpecialSeason.Value)
+            .OrderBy(s => s.IndexNumber ?? int.MaxValue)
+            .ToList();
 
         var dtoOptions = new DtoOptions { Fields = fields }
             .AddAdditionalDtoOptions(enableImages, enableUserData, imageTypeLimit, enableImageTypes);

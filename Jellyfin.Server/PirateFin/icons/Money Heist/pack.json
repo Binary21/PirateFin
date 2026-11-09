@@ -1,0 +1,86 @@
+{
+  "Name": "Money Heist",
+  "Order": 43,
+  "Icons": [
+    {
+      "File": "001-denver.png",
+      "Title": "Denver",
+      "Season": "Season 1"
+    },
+    {
+      "File": "002-professor.png",
+      "Title": "Professor",
+      "Season": "Season 1"
+    },
+    {
+      "File": "003-tokio.png",
+      "Title": "Tokio",
+      "Season": "Season 1"
+    },
+    {
+      "File": "004-nairobi.png",
+      "Title": "Nairobi",
+      "Season": "Season 1"
+    },
+    {
+      "File": "005-mask.png",
+      "Title": "Mask",
+      "Season": "Season 1"
+    },
+    {
+      "File": "006-berlin.png",
+      "Title": "Berlin",
+      "Season": "Season 1"
+    },
+    {
+      "File": "007-mask.png",
+      "Title": "Mask",
+      "Season": "Season 2"
+    },
+    {
+      "File": "008-professor.png",
+      "Title": "Professor",
+      "Season": "Season 2"
+    },
+    {
+      "File": "009-tokio.png",
+      "Title": "Tokio",
+      "Season": "Season 2"
+    },
+    {
+      "File": "010-nairobi.png",
+      "Title": "Nairobi",
+      "Season": "Season 2"
+    },
+    {
+      "File": "011-sierra.png",
+      "Title": "Sierra",
+      "Season": "Season 2"
+    },
+    {
+      "File": "012-rio.png",
+      "Title": "Rio",
+      "Season": "Season 2"
+    },
+    {
+      "File": "013-denver.png",
+      "Title": "Denver",
+      "Season": "Season 2"
+    },
+    {
+      "File": "014-lisboa.png",
+      "Title": "Lisboa",
+      "Season": "Season 2"
+    },
+    {
+      "File": "015-berlin.png",
+      "Title": "Berlin",
+      "Season": "Season 2"
+    },
+    {
+      "File": "016-palermo.png",
+      "Title": "Palermo",
+      "Season": "Season 2"
+    }
+  ]
+}
