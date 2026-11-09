@@ -1,0 +1,18 @@
+{
+  "Name": "Skylanders Academy",
+  "Order": 33,
+  "Icons": [
+    {
+      "File": "001-spyro.png",
+      "Title": "Spyro"
+    },
+    {
+      "File": "002-eruptor.png",
+      "Title": "Eruptor"
+    },
+    {
+      "File": "003-stealth-elf.png",
+      "Title": "Stealth Elf"
+    }
+  ]
+}

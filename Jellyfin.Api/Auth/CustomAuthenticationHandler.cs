@@ -5,8 +5,12 @@ using System.Threading.Tasks;
 using Jellyfin.Api.Constants;
 using Jellyfin.Data;
 using Jellyfin.Database.Implementations.Enums;
+using MediaBrowser.Common.Extensions;
+using MediaBrowser.Common.Net;
 using MediaBrowser.Controller.Authentication;
+using MediaBrowser.Controller.Configuration;
 using MediaBrowser.Controller.Net;
+using MediaBrowser.Controller.PirateFin;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -19,23 +23,31 @@ namespace Jellyfin.Api.Auth
     public class CustomAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly IAuthService _authService;
+        private readonly INetworkManager _networkManager;
+        private readonly IServerConfigurationManager _configurationManager;
         private readonly ILogger<CustomAuthenticationHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomAuthenticationHandler" /> class.
         /// </summary>
         /// <param name="authService">The jellyfin authentication service.</param>
+        /// <param name="networkManager">The network manager (PirateFin: admins outside the home network lose their rights).</param>
+        /// <param name="configurationManager">The server configuration manager.</param>
         /// <param name="options">Options monitor.</param>
         /// <param name="logger">The logger.</param>
         /// <param name="encoder">The url encoder.</param>
         public CustomAuthenticationHandler(
             IAuthService authService,
+            INetworkManager networkManager,
+            IServerConfigurationManager configurationManager,
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder)
             : base(options, logger, encoder)
         {
             _authService = authService;
+            _networkManager = networkManager;
+            _configurationManager = configurationManager;
             _logger = logger.CreateLogger<CustomAuthenticationHandler>();
         }
 
@@ -52,7 +64,8 @@ namespace Jellyfin.Api.Auth
 
                 var role = UserRoles.User;
                 if (authorizationInfo.IsApiKey
-                    || (authorizationInfo.User?.HasPermission(PermissionKind.IsAdministrator) ?? false))
+                    || ((authorizationInfo.User?.HasPermission(PermissionKind.IsAdministrator) ?? false)
+                        && !RemoteAdminAccess.IsBlocked(_networkManager, _configurationManager.Configuration, Request.HttpContext.GetNormalizedRemoteIP())))
                 {
                     role = UserRoles.Administrator;
                 }

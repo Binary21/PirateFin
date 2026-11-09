@@ -1,0 +1,26 @@
+{
+  "Name": "BoJack Horseman",
+  "Order": 38,
+  "Icons": [
+    {
+      "File": "001-bojack.png",
+      "Title": "Bojack"
+    },
+    {
+      "File": "002-diane.png",
+      "Title": "Diane"
+    },
+    {
+      "File": "003-mr-peanut-butter.png",
+      "Title": "Mr Peanut Butter"
+    },
+    {
+      "File": "004-princess-caroline.png",
+      "Title": "Princess Caroline"
+    },
+    {
+      "File": "005-todd.png",
+      "Title": "Todd"
+    }
+  ]
+}

@@ -8,6 +8,7 @@ using System.Net.Mime;
 using System.Text;
 using Emby.Server.Implementations.EntryPoints;
 using Emby.Server.Implementations.Localization;
+using Emby.Server.Implementations.PirateFin;
 using Jellyfin.Api.Middleware;
 using Jellyfin.Database.Implementations;
 using Jellyfin.LiveTv.Extensions;
@@ -21,7 +22,6 @@ using Jellyfin.Server.Implementations.Extensions;
 using MediaBrowser.Common.Net;
 using MediaBrowser.Controller.Configuration;
 using MediaBrowser.Controller.Extensions;
-using MediaBrowser.Controller.Library;
 using MediaBrowser.XbmcMetadata;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -130,8 +130,7 @@ namespace Jellyfin.Server
 
             services.AddHlsPlaylistGenerator();
             services.AddLiveTvServices();
-            services.AddAnimeSubscriptionServices(_configuration);
-            services.Configure<InternetProviderOptions>(_configuration.GetSection(InternetProviderOptions.SectionName));
+            services.AddPirateFin(_configuration);
 
             var serverUICulture = _serverConfigurationManager.Configuration.UICulture;
             if (string.IsNullOrEmpty(serverUICulture))

@@ -1,0 +1,38 @@
+{
+  "Name": "Dear White People",
+  "Order": 47,
+  "Icons": [
+    {
+      "File": "001-sam.png",
+      "Title": "Sam"
+    },
+    {
+      "File": "002-troy.png",
+      "Title": "Troy"
+    },
+    {
+      "File": "003-lionel.png",
+      "Title": "Lionel"
+    },
+    {
+      "File": "004-coco.png",
+      "Title": "Coco"
+    },
+    {
+      "File": "005-reggie.png",
+      "Title": "Reggie"
+    },
+    {
+      "File": "006-gabe.png",
+      "Title": "Gabe"
+    },
+    {
+      "File": "007-joelle.png",
+      "Title": "Joelle"
+    },
+    {
+      "File": "008-megaphone.png",
+      "Title": "Megaphone"
+    }
+  ]
+}

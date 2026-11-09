@@ -1,0 +1,34 @@
+{
+  "Name": "Outer Banks",
+  "Order": 57,
+  "Icons": [
+    {
+      "File": "001-john-b.png",
+      "Title": "John B"
+    },
+    {
+      "File": "002-sarah.png",
+      "Title": "Sarah"
+    },
+    {
+      "File": "003-jj.png",
+      "Title": "JJ"
+    },
+    {
+      "File": "004-kiara.png",
+      "Title": "Kiara"
+    },
+    {
+      "File": "005-pope.png",
+      "Title": "Pope"
+    },
+    {
+      "File": "006-cleo.png",
+      "Title": "Cleo"
+    },
+    {
+      "File": "007-rafe.png",
+      "Title": "Rafe"
+    }
+  ]
+}

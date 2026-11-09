@@ -1,0 +1,466 @@
+{
+  "Name": "Stranger Things",
+  "Order": 5,
+  "Icons": [
+    {
+      "File": "001-eleven.png",
+      "Title": "Eleven",
+      "Season": "Season 1"
+    },
+    {
+      "File": "002-mike.png",
+      "Title": "Mike",
+      "Season": "Season 1"
+    },
+    {
+      "File": "003-lucas.png",
+      "Title": "Lucas",
+      "Season": "Season 1"
+    },
+    {
+      "File": "004-will.png",
+      "Title": "Will",
+      "Season": "Season 1"
+    },
+    {
+      "File": "005-dustin.png",
+      "Title": "Dustin",
+      "Season": "Season 1"
+    },
+    {
+      "File": "006-steve.png",
+      "Title": "Steve",
+      "Season": "Season 1"
+    },
+    {
+      "File": "007-nancy.png",
+      "Title": "Nancy",
+      "Season": "Season 1"
+    },
+    {
+      "File": "008-jonathan.png",
+      "Title": "Jonathan",
+      "Season": "Season 1"
+    },
+    {
+      "File": "009-joyce.png",
+      "Title": "Joyce",
+      "Season": "Season 1"
+    },
+    {
+      "File": "010-hopper.png",
+      "Title": "Hopper",
+      "Season": "Season 1"
+    },
+    {
+      "File": "011-demogorgon.png",
+      "Title": "Demogorgon",
+      "Season": "Season 1"
+    },
+    {
+      "File": "012-billy.png",
+      "Title": "Billy",
+      "Season": "Season 2"
+    },
+    {
+      "File": "013-demogorgon.png",
+      "Title": "Demogorgon",
+      "Season": "Season 2"
+    },
+    {
+      "File": "014-dustin.png",
+      "Title": "Dustin",
+      "Season": "Season 2"
+    },
+    {
+      "File": "015-dustin-s-hat.png",
+      "Title": "Dustin's Hat",
+      "Season": "Season 2"
+    },
+    {
+      "File": "016-hopper-rare-never-officially-released.png",
+      "Title": "Hopper (RARE Never Officially Released)",
+      "Season": "Season 2"
+    },
+    {
+      "File": "017-jonathan.png",
+      "Title": "Jonathan",
+      "Season": "Season 2"
+    },
+    {
+      "File": "018-joyce-rare-never-officially-released.png",
+      "Title": "Joyce (RARE Never Officially Released)",
+      "Season": "Season 2"
+    },
+    {
+      "File": "019-lucas.png",
+      "Title": "Lucas",
+      "Season": "Season 2"
+    },
+    {
+      "File": "020-max.png",
+      "Title": "Max",
+      "Season": "Season 2"
+    },
+    {
+      "File": "021-mike.png",
+      "Title": "Mike",
+      "Season": "Season 2"
+    },
+    {
+      "File": "022-nancy.png",
+      "Title": "Nancy",
+      "Season": "Season 2"
+    },
+    {
+      "File": "023-steve.png",
+      "Title": "Steve",
+      "Season": "Season 2"
+    },
+    {
+      "File": "024-will.png",
+      "Title": "Will",
+      "Season": "Season 2"
+    },
+    {
+      "File": "025-billy.png",
+      "Title": "Billy",
+      "Season": "Season 3"
+    },
+    {
+      "File": "026-dustin.png",
+      "Title": "Dustin",
+      "Season": "Season 3"
+    },
+    {
+      "File": "027-eleven.png",
+      "Title": "Eleven",
+      "Season": "Season 3"
+    },
+    {
+      "File": "028-erica.png",
+      "Title": "Erica",
+      "Season": "Season 3"
+    },
+    {
+      "File": "029-hopper.png",
+      "Title": "Hopper",
+      "Season": "Season 3"
+    },
+    {
+      "File": "030-jonathan.png",
+      "Title": "Jonathan",
+      "Season": "Season 3"
+    },
+    {
+      "File": "031-joyce.png",
+      "Title": "Joyce",
+      "Season": "Season 3"
+    },
+    {
+      "File": "032-lucas.png",
+      "Title": "Lucas",
+      "Season": "Season 3"
+    },
+    {
+      "File": "033-max.png",
+      "Title": "Max",
+      "Season": "Season 3"
+    },
+    {
+      "File": "034-mike.png",
+      "Title": "Mike",
+      "Season": "Season 3"
+    },
+    {
+      "File": "035-nancy.png",
+      "Title": "Nancy",
+      "Season": "Season 3"
+    },
+    {
+      "File": "036-robin.png",
+      "Title": "Robin",
+      "Season": "Season 3"
+    },
+    {
+      "File": "037-steve.png",
+      "Title": "Steve",
+      "Season": "Season 3"
+    },
+    {
+      "File": "038-will.png",
+      "Title": "Will",
+      "Season": "Season 3"
+    },
+    {
+      "File": "039-billy-upside-down.png",
+      "Title": "Billy (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "040-demogorgon-upside-down.png",
+      "Title": "Demogorgon (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "041-dustin-upside-down.png",
+      "Title": "Dustin (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "042-dustin-s-hat-upside-down.png",
+      "Title": "Dustin's Hat (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "043-eleven-upside-down.png",
+      "Title": "Eleven (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "044-erica-upside-down.png",
+      "Title": "Erica (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "045-hopper-upside-down.png",
+      "Title": "Hopper (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "046-jonathan-upside-down.png",
+      "Title": "Jonathan (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "047-lucas-upside-down.png",
+      "Title": "Lucas (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "048-max-upside-down.png",
+      "Title": "Max (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "049-mike-upside-down.png",
+      "Title": "Mike (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "050-nancy-upside-down.png",
+      "Title": "Nancy (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "051-robin-upside-down.png",
+      "Title": "Robin (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "052-steve-upside-down.png",
+      "Title": "Steve (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "053-will-upside-down.png",
+      "Title": "Will (Upside Down)",
+      "Season": "Season 3"
+    },
+    {
+      "File": "054-eleven.png",
+      "Title": "Eleven",
+      "Season": "Season 4"
+    },
+    {
+      "File": "055-dustin.png",
+      "Title": "Dustin",
+      "Season": "Season 4"
+    },
+    {
+      "File": "056-mike.png",
+      "Title": "Mike",
+      "Season": "Season 4"
+    },
+    {
+      "File": "057-lucas.png",
+      "Title": "Lucas",
+      "Season": "Season 4"
+    },
+    {
+      "File": "058-will.png",
+      "Title": "Will",
+      "Season": "Season 4"
+    },
+    {
+      "File": "059-max.png",
+      "Title": "Max",
+      "Season": "Season 4"
+    },
+    {
+      "File": "060-hopper.png",
+      "Title": "Hopper",
+      "Season": "Season 4"
+    },
+    {
+      "File": "061-nancy.png",
+      "Title": "Nancy",
+      "Season": "Season 4"
+    },
+    {
+      "File": "062-joyce.png",
+      "Title": "Joyce",
+      "Season": "Season 4"
+    },
+    {
+      "File": "063-steve.png",
+      "Title": "Steve",
+      "Season": "Season 4"
+    },
+    {
+      "File": "064-eddie.png",
+      "Title": "Eddie",
+      "Season": "Season 4"
+    },
+    {
+      "File": "065-robbin.png",
+      "Title": "Robbin",
+      "Season": "Season 4"
+    },
+    {
+      "File": "066-jonathan.png",
+      "Title": "Jonathan",
+      "Season": "Season 4"
+    },
+    {
+      "File": "067-erica.png",
+      "Title": "Erica",
+      "Season": "Season 4"
+    },
+    {
+      "File": "068-argyle.png",
+      "Title": "Argyle",
+      "Season": "Season 4"
+    },
+    {
+      "File": "069-vecna.png",
+      "Title": "Vecna",
+      "Season": "Season 4"
+    },
+    {
+      "File": "070-murray.png",
+      "Title": "Murray",
+      "Season": "Season 4"
+    },
+    {
+      "File": "071-karen-wheeler.png",
+      "Title": "Karen Wheeler",
+      "Season": "Season 4"
+    },
+    {
+      "File": "072-eleven.png",
+      "Title": "Eleven",
+      "Season": "Season 5"
+    },
+    {
+      "File": "073-mike.png",
+      "Title": "Mike",
+      "Season": "Season 5"
+    },
+    {
+      "File": "074-will.png",
+      "Title": "Will",
+      "Season": "Season 5"
+    },
+    {
+      "File": "075-lucas.png",
+      "Title": "Lucas",
+      "Season": "Season 5"
+    },
+    {
+      "File": "076-max.png",
+      "Title": "Max",
+      "Season": "Season 5"
+    },
+    {
+      "File": "077-dustin.png",
+      "Title": "Dustin",
+      "Season": "Season 5"
+    },
+    {
+      "File": "078-steve.png",
+      "Title": "Steve",
+      "Season": "Season 5"
+    },
+    {
+      "File": "079-nancy.png",
+      "Title": "Nancy",
+      "Season": "Season 5"
+    },
+    {
+      "File": "080-jonathan.png",
+      "Title": "Jonathan",
+      "Season": "Season 5"
+    },
+    {
+      "File": "081-robin.png",
+      "Title": "Robin",
+      "Season": "Season 5"
+    },
+    {
+      "File": "082-hopper.png",
+      "Title": "Hopper",
+      "Season": "Season 5"
+    },
+    {
+      "File": "083-joyce.png",
+      "Title": "Joyce",
+      "Season": "Season 5"
+    },
+    {
+      "File": "084-holly.png",
+      "Title": "Holly",
+      "Season": "Season 5"
+    },
+    {
+      "File": "085-derek.png",
+      "Title": "Derek",
+      "Season": "Season 5"
+    },
+    {
+      "File": "086-erica.png",
+      "Title": "Erica",
+      "Season": "Season 5"
+    },
+    {
+      "File": "087-henry.png",
+      "Title": "Henry",
+      "Season": "Season 5"
+    },
+    {
+      "File": "088-murray.png",
+      "Title": "Murray",
+      "Season": "Season 5"
+    },
+    {
+      "File": "089-karen.png",
+      "Title": "Karen",
+      "Season": "Season 5"
+    },
+    {
+      "File": "090-dr-kay.png",
+      "Title": "Dr. Kay",
+      "Season": "Season 5"
+    },
+    {
+      "File": "091-demogorgon.png",
+      "Title": "Demogorgon",
+      "Season": "Season 5"
+    },
+    {
+      "File": "092-vecna.png",
+      "Title": "Vecna",
+      "Season": "Season 5"
+    }
+  ]
+}

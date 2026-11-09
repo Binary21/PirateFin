@@ -1,0 +1,10 @@
+{
+    "YouTube": {
+        "Enabled": false,
+        "ApiKey": "",
+        "ClientId": "",
+        "ClientSecret": "",
+        "DailySearchCap": 50,
+        "RegionCode": "US"
+    }
+}

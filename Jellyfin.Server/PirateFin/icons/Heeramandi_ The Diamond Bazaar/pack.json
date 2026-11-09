@@ -1,0 +1,58 @@
+{
+  "Name": "Heeramandi: The Diamond Bazaar",
+  "Order": 18,
+  "Icons": [
+    {
+      "File": "001-mallikajaan.png",
+      "Title": "Mallikajaan"
+    },
+    {
+      "File": "002-fareedan.png",
+      "Title": "Fareedan"
+    },
+    {
+      "File": "003-bibbojaan.png",
+      "Title": "Bibbojaan"
+    },
+    {
+      "File": "004-alamzeb.png",
+      "Title": "Alamzeb"
+    },
+    {
+      "File": "005-lajjo.png",
+      "Title": "Lajjo"
+    },
+    {
+      "File": "006-tajdar-baloch.png",
+      "Title": "Tajdar Baloch"
+    },
+    {
+      "File": "007-zorawar.png",
+      "Title": "Zorawar"
+    },
+    {
+      "File": "008-waheeda.png",
+      "Title": "Waheeda"
+    },
+    {
+      "File": "009-zulfikar.png",
+      "Title": "Zulfikar"
+    },
+    {
+      "File": "010-wali-mohammed.png",
+      "Title": "Wali Mohammed"
+    },
+    {
+      "File": "011-alastair-cartwright.png",
+      "Title": "Alastair Cartwright"
+    },
+    {
+      "File": "012-ustaadji.png",
+      "Title": "Ustaadji"
+    },
+    {
+      "File": "013-qudsia-begum.png",
+      "Title": "Qudsia Begum"
+    }
+  ]
+}

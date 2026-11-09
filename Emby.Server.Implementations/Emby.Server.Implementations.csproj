@@ -31,6 +31,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
     <PackageReference Include="prometheus-net.DotNetRuntime" />
     <PackageReference Include="DotNet.Glob" />
+    <PackageReference Include="MailKit" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,5 +75,6 @@
     <EmbeddedResource Include="Localization\countries.json" />
     <EmbeddedResource Include="Localization\Core\*.json" />
     <EmbeddedResource Include="Localization\Ratings\*.json" />
+    <EmbeddedResource Include="PirateFin\Notifications\Resources\email-logo.png" LogicalName="PirateFin.EmailLogo.png" />
   </ItemGroup>
 </Project>

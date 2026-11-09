@@ -1,0 +1,18 @@
+{
+  "Name": "Cowboy Bebop",
+  "Order": 10,
+  "Icons": [
+    {
+      "File": "001-spike.png",
+      "Title": "Spike"
+    },
+    {
+      "File": "002-ein.png",
+      "Title": "Ein"
+    },
+    {
+      "File": "003-jet.png",
+      "Title": "Jet"
+    }
+  ]
+}

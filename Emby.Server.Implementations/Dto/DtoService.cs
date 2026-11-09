@@ -18,11 +18,13 @@ using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Audio;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.LiveTv;
+using MediaBrowser.Controller.PirateFin;
 using MediaBrowser.Controller.Playlists;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Controller.Trickplay;
 using MediaBrowser.Model.Dto;
 using MediaBrowser.Model.Entities;
+using MediaBrowser.Model.PirateFin;
 using MediaBrowser.Model.Querying;
 using Microsoft.Extensions.Logging;
 using Book = MediaBrowser.Controller.Entities.Book;
@@ -123,6 +125,7 @@ namespace Emby.Server.Implementations.Dto
 
         private readonly ITrickplayManager _trickplayManager;
         private readonly IChapterManager _chapterManager;
+        private readonly ISeasonSubscriptions? _seasonSubscriptions;
 
         public DtoService(
             ILogger<DtoService> logger,
@@ -135,7 +138,8 @@ namespace Emby.Server.Implementations.Dto
             IMediaSourceManager mediaSourceManager,
             Lazy<ILiveTvManager> livetvManagerFactory,
             ITrickplayManager trickplayManager,
-            IChapterManager chapterManager)
+            IChapterManager chapterManager,
+            ISeasonSubscriptions? seasonSubscriptions = null)
         {
             _logger = logger;
             _libraryManager = libraryManager;
@@ -148,6 +152,7 @@ namespace Emby.Server.Implementations.Dto
             _livetvManagerFactory = livetvManagerFactory;
             _trickplayManager = trickplayManager;
             _chapterManager = chapterManager;
+            _seasonSubscriptions = seasonSubscriptions;
         }
 
         private ILiveTvManager LivetvManager => _livetvManagerFactory.Value;
@@ -370,6 +375,7 @@ namespace Emby.Server.Implementations.Dto
             }
 
             AttachBasicFields(dto, item, owner, options, artistsBatch);
+            AttachPirateFinInfo(dto, item, user);
 
             if (options.ContainsField(ItemFields.CanDelete))
             {
@@ -833,10 +839,62 @@ namespace Emby.Server.Implementations.Dto
         }
 
         /// <summary>
-        /// Attaches the studios.
+        /// Attaches the PirateFin fields: release status, air time, sources and the user's season subscription.
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <param name="item">The item.</param>
+        /// <param name="user">The user the dto is for, if any.</param>
+        private void AttachPirateFinInfo(BaseItemDto dto, BaseItem item, User? user)
+        {
+            dto.IsInternet = item.IsInternet;
+            dto.FirstAiring = item.FirstAiring.HasValue ? ReleaseStatusResolver.ToUtc(item.FirstAiring.Value) : null;
+
+            switch (item)
+            {
+                case Episode episode:
+                    dto.Title = episode.Name;
+                    dto.IsDownloadable = episode.IsDownloadable;
+                    dto.SourceCount = episode.SourceCandidates?.Length ?? 0;
+                    dto.IsSubscribed = item.IsInternet && episode.Season is { } episodeSeason ? IsSubscribed(episodeSeason, user) : null;
+                    dto.SubscriptionLanguage = dto.IsSubscribed == true ? GetSubscriptionLanguage(episode.Season!, user) : null;
+                    dto.IsAnime = dto.IsSubscribed.HasValue ? PirateFinLibraries.Normalize(episode.LibraryType) == PirateFinLibraries.Anime : null;
+                    break;
+                case Movie movie:
+                    dto.IsDownloadable = movie.IsDownloadable;
+                    break;
+                case Season season when season.IsInternet:
+                    dto.IsSubscribed = IsSubscribed(season, user);
+                    dto.SubscriptionLanguage = dto.IsSubscribed == true ? GetSubscriptionLanguage(season, user) : null;
+                    dto.IsAnime = IsAnimeSeason(season);
+                    break;
+            }
+
+            var status = ReleaseStatusResolver.Resolve(item, DateTime.UtcNow);
+            dto.ReleaseStatus = status == ReleaseStatus.None ? null : status;
+
+            // Episode lists grey out play until it works: downloaded, or playable part way through the download.
+            if (status != ReleaseStatus.None && item is Video video)
+            {
+                dto.IsReadyToPlay = status == ReleaseStatus.Downloaded
+                    || (status == ReleaseStatus.Downloading && video.IsPlayable && video.RunTimeTicks > 0);
+            }
+        }
+
+        // The bell shows the user's own subscription; without a user, whether anyone is subscribed.
+        private bool IsSubscribed(Season season, User? user)
+            => user is null || _seasonSubscriptions is null
+                ? season.Subscribed
+                : _seasonSubscriptions.IsSubscribed(season.Id, user.Id);
+
+        // A season's library is the one its episodes were generated for.
+        private bool IsAnimeSeason(Season season)
+            => _libraryManager.GetItemList(new InternalItemsQuery { ParentId = season.Id, IncludeItemTypes = [BaseItemKind.Episode], Limit = 1 })
+                .OfType<Episode>()
+                .Any(e => PirateFinLibraries.Normalize(e.LibraryType) == PirateFinLibraries.Anime);
+
+        private ReleaseLanguage? GetSubscriptionLanguage(Season season, User? user)
+            => user is null || _seasonSubscriptions is null ? null : _seasonSubscriptions.GetLanguage(season.Id, user.Id);
+
         private void AttachStudios(BaseItemDto dto, BaseItem item)
         {
             dto.Studios = item.Studios
@@ -1009,18 +1067,9 @@ namespace Emby.Server.Implementations.Dto
                 }
             }
 
-            if (item is Episode episodeType)
-            {
-                dto.Title = episodeType.Name;
-                dto.IsInterent = episodeType.IsInternet;
-                dto.IsDownloadable = episodeType.IsDownloadable;
-                dto.MagnetURL = episodeType.DownloadUrl;
-            }
-
             dto.Id = item.Id;
             dto.IndexNumber = item.IndexNumber;
             dto.ParentIndexNumber = item.ParentIndexNumber;
-            dto.FirstAiring = item.FirstAiring;
             if (item.IsFolder)
             {
                 dto.IsFolder = true;

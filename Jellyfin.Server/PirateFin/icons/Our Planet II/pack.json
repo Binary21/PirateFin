@@ -1,0 +1,58 @@
+{
+  "Name": "Our Planet II",
+  "Order": 3,
+  "Icons": [
+    {
+      "File": "001-tiger.png",
+      "Title": "Tiger"
+    },
+    {
+      "File": "002-rhino.png",
+      "Title": "Rhino"
+    },
+    {
+      "File": "003-frog.png",
+      "Title": "Frog"
+    },
+    {
+      "File": "004-fox.png",
+      "Title": "Fox"
+    },
+    {
+      "File": "005-penguin.png",
+      "Title": "Penguin"
+    },
+    {
+      "File": "006-turtle.png",
+      "Title": "Turtle"
+    },
+    {
+      "File": "007-monkey.png",
+      "Title": "Monkey"
+    },
+    {
+      "File": "008-capybara.png",
+      "Title": "Capybara"
+    },
+    {
+      "File": "009-butterfly.png",
+      "Title": "Butterfly"
+    },
+    {
+      "File": "010-polar-bear.png",
+      "Title": "Polar Bear"
+    },
+    {
+      "File": "011-shark.png",
+      "Title": "Shark"
+    },
+    {
+      "File": "012-orangutan.png",
+      "Title": "Orangutan"
+    },
+    {
+      "File": "013-bird.png",
+      "Title": "Bird"
+    }
+  ]
+}

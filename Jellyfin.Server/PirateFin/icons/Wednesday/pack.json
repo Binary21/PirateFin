@@ -1,0 +1,131 @@
+{
+  "Name": "Wednesday",
+  "Order": 29,
+  "Icons": [
+    {
+      "File": "001-wednesday.png",
+      "Title": "Wednesday",
+      "Season": "Season 1"
+    },
+    {
+      "File": "002-enid.png",
+      "Title": "Enid",
+      "Season": "Season 1"
+    },
+    {
+      "File": "003-bianca.png",
+      "Title": "Bianca",
+      "Season": "Season 1"
+    },
+    {
+      "File": "004-tyler.png",
+      "Title": "Tyler",
+      "Season": "Season 1"
+    },
+    {
+      "File": "005-thing.png",
+      "Title": "Thing",
+      "Season": "Season 1"
+    },
+    {
+      "File": "006-morticia.png",
+      "Title": "Morticia",
+      "Season": "Season 1"
+    },
+    {
+      "File": "007-gomez.png",
+      "Title": "Gomez",
+      "Season": "Season 1"
+    },
+    {
+      "File": "008-pugsley.png",
+      "Title": "Pugsley",
+      "Season": "Season 1"
+    },
+    {
+      "File": "009-xavier.png",
+      "Title": "Xavier",
+      "Season": "Season 1"
+    },
+    {
+      "File": "010-eugene.png",
+      "Title": "Eugene",
+      "Season": "Season 1"
+    },
+    {
+      "File": "011-ajax.png",
+      "Title": "Ajax",
+      "Season": "Season 1"
+    },
+    {
+      "File": "012-yoko.png",
+      "Title": "Yoko",
+      "Season": "Season 1"
+    },
+    {
+      "File": "013-wednesday.png",
+      "Title": "Wednesday",
+      "Season": "Season 2"
+    },
+    {
+      "File": "014-thing.png",
+      "Title": "Thing",
+      "Season": "Season 2"
+    },
+    {
+      "File": "015-enid.png",
+      "Title": "Enid",
+      "Season": "Season 2"
+    },
+    {
+      "File": "016-morticia.png",
+      "Title": "Morticia",
+      "Season": "Season 2"
+    },
+    {
+      "File": "017-gomez.png",
+      "Title": "Gomez",
+      "Season": "Season 2"
+    },
+    {
+      "File": "018-grandmama-hester-frump.png",
+      "Title": "Grandmama Hester Frump",
+      "Season": "Season 2"
+    },
+    {
+      "File": "019-pugsly.png",
+      "Title": "Pugsly",
+      "Season": "Season 2"
+    },
+    {
+      "File": "020-uncle-fester.png",
+      "Title": "Uncle Fester",
+      "Season": "Season 2"
+    },
+    {
+      "File": "021-bianca.png",
+      "Title": "Bianca",
+      "Season": "Season 2"
+    },
+    {
+      "File": "022-agnes.png",
+      "Title": "Agnes",
+      "Season": "Season 2"
+    },
+    {
+      "File": "023-tyler.png",
+      "Title": "Tyler",
+      "Season": "Season 2"
+    },
+    {
+      "File": "024-principal-dort.png",
+      "Title": "Principal Dort",
+      "Season": "Season 2"
+    },
+    {
+      "File": "025-slurp.png",
+      "Title": "Slurp",
+      "Season": "Season 2"
+    }
+  ]
+}

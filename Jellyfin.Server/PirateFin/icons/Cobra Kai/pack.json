@@ -1,0 +1,191 @@
+{
+  "Name": "Cobra Kai",
+  "Order": 4,
+  "Icons": [
+    {
+      "File": "001-daniel.png",
+      "Title": "Daniel",
+      "Season": "Season 5"
+    },
+    {
+      "File": "002-johnny.png",
+      "Title": "Johnny",
+      "Season": "Season 5"
+    },
+    {
+      "File": "003-kreese.png",
+      "Title": "Kreese",
+      "Season": "Season 5"
+    },
+    {
+      "File": "004-miguel.png",
+      "Title": "Miguel",
+      "Season": "Season 5"
+    },
+    {
+      "File": "005-robbie.png",
+      "Title": "Robbie",
+      "Season": "Season 5"
+    },
+    {
+      "File": "006-samantha.png",
+      "Title": "Samantha",
+      "Season": "Season 5"
+    },
+    {
+      "File": "007-tory.png",
+      "Title": "Tory",
+      "Season": "Season 5"
+    },
+    {
+      "File": "008-hawk.png",
+      "Title": "Hawk",
+      "Season": "Season 5"
+    },
+    {
+      "File": "009-demetri.png",
+      "Title": "Demetri",
+      "Season": "Season 5"
+    },
+    {
+      "File": "010-terry-silver.png",
+      "Title": "Terry Silver",
+      "Season": "Season 5"
+    },
+    {
+      "File": "011-amanda.png",
+      "Title": "Amanda",
+      "Season": "Season 5"
+    },
+    {
+      "File": "012-carmen.png",
+      "Title": "Carmen",
+      "Season": "Season 5"
+    },
+    {
+      "File": "013-mr-miyagi.png",
+      "Title": "Mr. Miyagi",
+      "Season": "Season 5"
+    },
+    {
+      "File": "014-cobra-kai.png",
+      "Title": "Cobra Kai",
+      "Season": "Season 5"
+    },
+    {
+      "File": "015-miyagi-do.png",
+      "Title": "Miyagi-Do",
+      "Season": "Season 5"
+    },
+    {
+      "File": "016-johnny.png",
+      "Title": "Johnny",
+      "Season": "Season 6"
+    },
+    {
+      "File": "017-daniel.png",
+      "Title": "Daniel",
+      "Season": "Season 6"
+    },
+    {
+      "File": "018-miguel.png",
+      "Title": "Miguel",
+      "Season": "Season 6"
+    },
+    {
+      "File": "019-robbie.png",
+      "Title": "Robbie",
+      "Season": "Season 6"
+    },
+    {
+      "File": "020-tory.png",
+      "Title": "Tory",
+      "Season": "Season 6"
+    },
+    {
+      "File": "021-sam.png",
+      "Title": "Sam",
+      "Season": "Season 6"
+    },
+    {
+      "File": "022-hawk.png",
+      "Title": "Hawk",
+      "Season": "Season 6"
+    },
+    {
+      "File": "023-kenny.png",
+      "Title": "Kenny",
+      "Season": "Season 6"
+    },
+    {
+      "File": "024-demetri.png",
+      "Title": "Demetri",
+      "Season": "Season 6"
+    },
+    {
+      "File": "025-chozen.png",
+      "Title": "Chozen",
+      "Season": "Season 6"
+    },
+    {
+      "File": "026-kreese.png",
+      "Title": "Kreese",
+      "Season": "Season 6"
+    },
+    {
+      "File": "027-mr-miyagi.png",
+      "Title": "Mr. Miyagi",
+      "Season": "Season 6"
+    },
+    {
+      "File": "028-terry-silver.png",
+      "Title": "Terry Silver",
+      "Season": "Season 6"
+    },
+    {
+      "File": "029-sensei-kim.png",
+      "Title": "Sensei Kim",
+      "Season": "Season 6"
+    },
+    {
+      "File": "030-sensei-wolf.png",
+      "Title": "Sensei Wolf",
+      "Season": "Season 6"
+    },
+    {
+      "File": "031-kwon.png",
+      "Title": "Kwon",
+      "Season": "Season 6"
+    },
+    {
+      "File": "032-zara.png",
+      "Title": "Zara",
+      "Season": "Season 6"
+    },
+    {
+      "File": "033-anthony.png",
+      "Title": "Anthony",
+      "Season": "Season 6"
+    },
+    {
+      "File": "034-devon.png",
+      "Title": "Devon",
+      "Season": "Season 6"
+    },
+    {
+      "File": "035-axel.png",
+      "Title": "Axel",
+      "Season": "Season 6"
+    },
+    {
+      "File": "036-carmen.png",
+      "Title": "Carmen",
+      "Season": "Season 6"
+    },
+    {
+      "File": "037-amanda.png",
+      "Title": "Amanda",
+      "Season": "Season 6"
+    }
+  ]
+}

@@ -100,7 +100,7 @@ public class ImageController : BaseJellyfinApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> PostUserImage(
+    public ActionResult PostUserImage(
         [FromQuery] Guid? userId)
     {
         var requestUserId = RequestHelpers.GetUserId(User, userId);
@@ -115,31 +115,8 @@ public class ImageController : BaseJellyfinApiController
             return StatusCode(StatusCodes.Status403Forbidden, "User is not allowed to update the image.");
         }
 
-        if (!TryGetImageExtensionFromContentType(Request.ContentType, out string? extension))
-        {
-            return BadRequest("Incorrect ContentType.");
-        }
-
-        var stream = GetFromBase64Stream(Request.Body);
-        await using (stream.ConfigureAwait(false))
-        {
-            // Handle image/png; charset=utf-8
-            var mimeType = Request.ContentType?.Split(';').FirstOrDefault();
-            var userDataPath = Path.Combine(_serverConfigurationManager.ApplicationPaths.UserConfigurationDirectoryPath, user.Username);
-            if (user.ProfileImage is not null)
-            {
-                await _userManager.ClearProfileImageAsync(user).ConfigureAwait(false);
-            }
-
-            user.ProfileImage = new Database.Implementations.Entities.ImageInfo(Path.Combine(userDataPath, "profile" + extension));
-
-            await _providerManager
-                .SaveImage(stream, mimeType, user.ProfileImage.Path)
-                .ConfigureAwait(false);
-            await _userManager.UpdateUserAsync(user).ConfigureAwait(false);
-
-            return NoContent();
-        }
+        // PirateFin: profile images can only be chosen from the icon packs (PirateFin/Users/{userId}/Icon).
+        return StatusCode(StatusCodes.Status403Forbidden, "Profile images are chosen from the PirateFin icon packs.");
     }
 
     /// <summary>
@@ -159,7 +136,7 @@ public class ImageController : BaseJellyfinApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [SuppressMessage("Microsoft.Performance", "CA1801:ReviewUnusedParameters", MessageId = "imageType", Justification = "Imported from ServiceStack")]
-    public Task<ActionResult> PostUserImageLegacy(
+    public ActionResult PostUserImageLegacy(
         [FromRoute, Required] Guid userId,
         [FromRoute, Required] ImageType imageType)
         => PostUserImage(userId);
@@ -183,7 +160,7 @@ public class ImageController : BaseJellyfinApiController
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [SuppressMessage("Microsoft.Performance", "CA1801:ReviewUnusedParameters", MessageId = "imageType", Justification = "Imported from ServiceStack")]
     [SuppressMessage("Microsoft.Performance", "CA1801:ReviewUnusedParameters", MessageId = "index", Justification = "Imported from ServiceStack")]
-    public Task<ActionResult> PostUserImageByIndexLegacy(
+    public ActionResult PostUserImageByIndexLegacy(
         [FromRoute, Required] Guid userId,
         [FromRoute, Required] ImageType imageType,
         [FromRoute] int index)
@@ -200,7 +177,7 @@ public class ImageController : BaseJellyfinApiController
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult> DeleteUserImage(
+    public ActionResult DeleteUserImage(
         [FromQuery] Guid? userId)
     {
         var requestUserId = RequestHelpers.GetUserId(User, userId);
@@ -215,22 +192,8 @@ public class ImageController : BaseJellyfinApiController
             return StatusCode(StatusCodes.Status403Forbidden, "User is not allowed to delete the image.");
         }
 
-        if (user.ProfileImage is null)
-        {
-            return NoContent();
-        }
-
-        try
-        {
-            System.IO.File.Delete(user.ProfileImage.Path);
-        }
-        catch (IOException e)
-        {
-            _logger.LogError(e, "Error deleting user profile image:");
-        }
-
-        await _userManager.ClearProfileImageAsync(user).ConfigureAwait(false);
-        return NoContent();
+        // PirateFin: every user keeps an icon from the icon packs; it can be changed but not removed.
+        return StatusCode(StatusCodes.Status403Forbidden, "Profile images are chosen from the PirateFin icon packs.");
     }
 
     /// <summary>
@@ -250,7 +213,7 @@ public class ImageController : BaseJellyfinApiController
     [SuppressMessage("Microsoft.Performance", "CA1801:ReviewUnusedParameters", MessageId = "index", Justification = "Imported from ServiceStack")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public Task<ActionResult> DeleteUserImageLegacy(
+    public ActionResult DeleteUserImageLegacy(
         [FromRoute, Required] Guid userId,
         [FromRoute, Required] ImageType imageType,
         [FromQuery] int? index = null)
@@ -273,7 +236,7 @@ public class ImageController : BaseJellyfinApiController
     [SuppressMessage("Microsoft.Performance", "CA1801:ReviewUnusedParameters", MessageId = "index", Justification = "Imported from ServiceStack")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public Task<ActionResult> DeleteUserImageByIndexLegacy(
+    public ActionResult DeleteUserImageByIndexLegacy(
         [FromRoute, Required] Guid userId,
         [FromRoute, Required] ImageType imageType,
         [FromRoute] int index)

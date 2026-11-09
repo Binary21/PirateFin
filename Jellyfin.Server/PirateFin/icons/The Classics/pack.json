@@ -1,0 +1,105 @@
+{
+  "Name": "The Classics",
+  "Order": 0,
+  "Icons": [
+    {
+      "File": "001-scarlet-chilleez.png",
+      "Title": "Scarlet Chilleez"
+    },
+    {
+      "File": "002-sunny-chilleez.png",
+      "Title": "Sunny Chilleez"
+    },
+    {
+      "File": "003-robin-chilleez.png",
+      "Title": "Robin Chilleez"
+    },
+    {
+      "File": "004-dusty-chilleez.png",
+      "Title": "Dusty Chilleez"
+    },
+    {
+      "File": "005-purple-superhero.png",
+      "Title": "Purple Superhero"
+    },
+    {
+      "File": "006-moustache.png",
+      "Title": "Moustache"
+    },
+    {
+      "File": "007-dog.png",
+      "Title": "Dog"
+    },
+    {
+      "File": "008-red-superhero.png",
+      "Title": "Red Superhero"
+    },
+    {
+      "File": "009-purple-penguin.png",
+      "Title": "Purple Penguin"
+    },
+    {
+      "File": "010-pink-giggle.png",
+      "Title": "Pink Giggle"
+    },
+    {
+      "File": "011-chicken.png",
+      "Title": "Chicken"
+    },
+    {
+      "File": "012-eye-patch.png",
+      "Title": "Eye Patch"
+    },
+    {
+      "File": "013-alien.png",
+      "Title": "Alien"
+    },
+    {
+      "File": "014-robot.png",
+      "Title": "Robot"
+    },
+    {
+      "File": "015-mummy.png",
+      "Title": "Mummy"
+    },
+    {
+      "File": "016-helmet.png",
+      "Title": "Helmet"
+    },
+    {
+      "File": "017-red-smile.png",
+      "Title": "Red Smile",
+      "Default": true
+    },
+    {
+      "File": "018-dark-grey-smile.png",
+      "Title": "Dark Grey Smile",
+      "Default": true
+    },
+    {
+      "File": "019-yellow-smile.png",
+      "Title": "Yellow Smile",
+      "Default": true
+    },
+    {
+      "File": "020-green-smile.png",
+      "Title": "Green Smile",
+      "Default": true
+    },
+    {
+      "File": "021-blue-smile.png",
+      "Title": "Blue Smile",
+      "Default": true
+    },
+    {
+      "File": "022-purple-smile.png",
+      "Title": "Purple Smile",
+      "Default": true
+    },
+    {
+      "File": "023-pink-smile.png",
+      "Title": "Pink Smile",
+      "Default": true
+    }
+  ]
+}

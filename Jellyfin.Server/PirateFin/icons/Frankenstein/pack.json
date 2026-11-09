@@ -1,0 +1,30 @@
+{
+  "Name": "Frankenstein",
+  "Order": 34,
+  "Icons": [
+    {
+      "File": "001-victor.png",
+      "Title": "Victor"
+    },
+    {
+      "File": "002-creature.png",
+      "Title": "Creature"
+    },
+    {
+      "File": "003-elizabeth.png",
+      "Title": "Elizabeth"
+    },
+    {
+      "File": "004-william.png",
+      "Title": "William"
+    },
+    {
+      "File": "005-heinrich.png",
+      "Title": "Heinrich"
+    },
+    {
+      "File": "006-dark-angel.png",
+      "Title": "Dark Angel"
+    }
+  ]
+}

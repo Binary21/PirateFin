@@ -1,0 +1,34 @@
+{
+  "Name": "Young Royals",
+  "Order": 26,
+  "Icons": [
+    {
+      "File": "001-wilhelm.png",
+      "Title": "Wilhelm"
+    },
+    {
+      "File": "002-simon.png",
+      "Title": "Simon"
+    },
+    {
+      "File": "003-felice.png",
+      "Title": "Felice"
+    },
+    {
+      "File": "004-august.png",
+      "Title": "August"
+    },
+    {
+      "File": "005-sara.png",
+      "Title": "Sara"
+    },
+    {
+      "File": "006-crown.png",
+      "Title": "Crown"
+    },
+    {
+      "File": "007-school-logo.png",
+      "Title": "School Logo"
+    }
+  ]
+}

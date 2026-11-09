@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Jellyfin.Data.Enums;
+using MediaBrowser.Controller.PirateFin;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
 
@@ -16,20 +17,32 @@ namespace MediaBrowser.Controller.Entities.Movies
     /// <summary>
     /// Class Movie.
     /// </summary>
-    public class Movie : Video, IHasSpecialFeatures, IHasTrailers, IHasLookupInfo<MovieInfo>, ISupportsBoxSetGrouping
+    public class Movie : Video, IHasSpecialFeatures, IHasTrailers, IHasLookupInfo<MovieInfo>, ISupportsBoxSetGrouping, IPirateFinDownloadable
     {
+        /// <summary>
+        /// Gets or sets the magnet url of the release (PirateFin).
+        /// </summary>
         public string DownloadUrl { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Gets or sets the seeders of the release (PirateFin).
+        /// </summary>
         public int? Seeders { get; set; }
 
-        public bool IsDownloadable { get; set; } = false;
+        /// <summary>
+        /// Gets or sets a value indicating whether <see cref="DownloadUrl"/> is set (PirateFin).
+        /// </summary>
+        public bool IsDownloadable { get; set; }
 
-        public bool CantDownload { get; set; } = false;
+        /// <summary>
+        /// Gets or sets when the download started, in UTC; <c>null</c> when not downloading (PirateFin).
+        /// </summary>
+        public DateTime? DownloadStartedUtc { get; set; }
 
         public override bool CanDelete()
         {
-            // Generated placeholders have no file on disk; they must survive library validation even after leaving the download queue (Scheduled = false).
-            if (IsPlaceHolder && IsVirtualItem && IsInternet && !string.IsNullOrEmpty(Path) && !File.Exists(Path))
+            // PirateFin items have no file on disk until downloaded; library scans must never remove them (even once the source search gave up and Scheduled = false).
+            if (IsInternet && !IsDownloaded && !string.IsNullOrEmpty(Path) && !File.Exists(Path))
             {
                 return false;
             }

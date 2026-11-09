@@ -83,6 +83,13 @@ public class ServerConfiguration : BaseApplicationConfiguration
     public bool QuickConnectAvailable { get; set; } = true;
 
     /// <summary>
+    /// Gets or sets a value indicating whether administrators keep their admin rights (the dashboard and every admin
+    /// action) when signed in from outside the home network. PirateFin: off by default, so a stolen admin password is
+    /// only good at home.
+    /// </summary>
+    public bool AllowRemoteAdminAccess { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether [enable case-sensitive item ids].
     /// </summary>
     /// <value><c>true</c> if [enable case-sensitive item ids]; otherwise, <c>false</c>.</value>

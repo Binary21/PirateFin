@@ -37,6 +37,24 @@ namespace MediaBrowser.Controller.Entities.TV
 
         public bool Subscribed { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets the season number an admin set for torrent searches (PirateFin). <c>null</c> uses the season's own number.
+        /// Only the Jackett search uses it; the displayed number is unchanged.
+        /// </summary>
+        public int? SearchSeasonNumberOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets when the season's episodes are next searched for the languages a subscriber wants but the
+        /// episode doesn't have yet (usually dubs), in UTC (PirateFin). <c>null</c>: when the next sub releases.
+        /// </summary>
+        public DateTime? VersionSearchNextUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the language version search gave up (the season ended and the dub
+        /// didn't follow in time). Subscribing in a language starts it again.
+        /// </summary>
+        public bool VersionSearchStopped { get; set; }
+
         [JsonIgnore]
         public override bool SupportsInheritedParentImages => true;
 

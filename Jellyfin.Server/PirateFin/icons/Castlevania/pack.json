@@ -1,0 +1,18 @@
+{
+  "Name": "Castlevania",
+  "Order": 9,
+  "Icons": [
+    {
+      "File": "001-alucard.png",
+      "Title": "Alucard"
+    },
+    {
+      "File": "002-dracula.png",
+      "Title": "Dracula"
+    },
+    {
+      "File": "003-trevor.png",
+      "Title": "Trevor"
+    }
+  ]
+}

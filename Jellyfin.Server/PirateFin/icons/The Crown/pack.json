@@ -1,0 +1,62 @@
+{
+  "Name": "The Crown",
+  "Order": 6,
+  "Icons": [
+    {
+      "File": "001-corgi.png",
+      "Title": "Corgi"
+    },
+    {
+      "File": "002-queen-elizabeth-claire-foy.png",
+      "Title": "Queen Elizabeth - Claire Foy"
+    },
+    {
+      "File": "003-queen-elizabeth-olivia-coleman.png",
+      "Title": "Queen Elizabeth - Olivia Coleman"
+    },
+    {
+      "File": "004-queen-elizabeth-imelda-staunton.png",
+      "Title": "Queen Elizabeth - Imelda Staunton"
+    },
+    {
+      "File": "005-prince-charles-josh-o-connor.png",
+      "Title": "Prince Charles - Josh O'Connor"
+    },
+    {
+      "File": "006-prince-charles-dominic-west.png",
+      "Title": "Prince Charles - Dominic West"
+    },
+    {
+      "File": "007-lady-diana.png",
+      "Title": "Lady Diana"
+    },
+    {
+      "File": "008-princess-diana.png",
+      "Title": "Princess Diana"
+    },
+    {
+      "File": "009-prince-phillip-matt-smith.png",
+      "Title": "Prince Phillip - Matt Smith"
+    },
+    {
+      "File": "010-prince-phillip-tobias-menzies.png",
+      "Title": "Prince Phillip - Tobias Menzies"
+    },
+    {
+      "File": "011-prince-philip-jonathan-pryce.png",
+      "Title": "Prince Philip - Jonathan Pryce"
+    },
+    {
+      "File": "012-princess-margaret-vanessa-kirby.png",
+      "Title": "Princess Margaret - Vanessa Kirby"
+    },
+    {
+      "File": "013-princess-margaret-helena-bonham-carter.png",
+      "Title": "Princess Margaret - Helena Bonham Carter"
+    },
+    {
+      "File": "014-princess-margaret-lesley-manville.png",
+      "Title": "Princess Margaret - Lesley Manville"
+    }
+  ]
+}

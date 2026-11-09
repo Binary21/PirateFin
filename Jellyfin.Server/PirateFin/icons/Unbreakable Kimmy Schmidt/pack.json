@@ -1,0 +1,14 @@
+{
+  "Name": "Unbreakable Kimmy Schmidt",
+  "Order": 16,
+  "Icons": [
+    {
+      "File": "001-kimmy.png",
+      "Title": "Kimmy"
+    },
+    {
+      "File": "002-titus.png",
+      "Title": "Titus"
+    }
+  ]
+}

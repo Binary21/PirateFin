@@ -1,0 +1,46 @@
+{
+  "Name": "Orange Is the New Black",
+  "Order": 39,
+  "Icons": [
+    {
+      "File": "001-piper.png",
+      "Title": "Piper"
+    },
+    {
+      "File": "002-suzanne.png",
+      "Title": "Suzanne"
+    },
+    {
+      "File": "003-gloria.png",
+      "Title": "Gloria"
+    },
+    {
+      "File": "004-taystee.png",
+      "Title": "Taystee"
+    },
+    {
+      "File": "005-alex.png",
+      "Title": "Alex"
+    },
+    {
+      "File": "006-black-cindy.png",
+      "Title": "Black Cindy"
+    },
+    {
+      "File": "007-red.png",
+      "Title": "Red"
+    },
+    {
+      "File": "008-daya.png",
+      "Title": "Daya"
+    },
+    {
+      "File": "009-nicky.png",
+      "Title": "Nicky"
+    },
+    {
+      "File": "010-chicken.png",
+      "Title": "Chicken"
+    }
+  ]
+}

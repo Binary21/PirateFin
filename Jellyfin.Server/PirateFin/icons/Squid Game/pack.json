@@ -1,0 +1,131 @@
+{
+  "Name": "Squid Game",
+  "Order": 7,
+  "Icons": [
+    {
+      "File": "001-deok-su.png",
+      "Title": "Deok-su",
+      "Season": "Season 1"
+    },
+    {
+      "File": "002-mi-nyeo.png",
+      "Title": "Mi-nyeo",
+      "Season": "Season 1"
+    },
+    {
+      "File": "003-sae-byeok.png",
+      "Title": "Sae-Byeok",
+      "Season": "Season 1"
+    },
+    {
+      "File": "004-front-man.png",
+      "Title": "Front Man",
+      "Season": "Season 2"
+    },
+    {
+      "File": "005-masked-manager.png",
+      "Title": "Masked Manager",
+      "Season": "Season 2"
+    },
+    {
+      "File": "006-masked-soldier.png",
+      "Title": "Masked Soldier",
+      "Season": "Season 2"
+    },
+    {
+      "File": "007-masked-worker.png",
+      "Title": "Masked Worker",
+      "Season": "Season 2"
+    },
+    {
+      "File": "008-masked-officer.png",
+      "Title": "Masked Officer",
+      "Season": "Season 2"
+    },
+    {
+      "File": "009-young-hee.png",
+      "Title": "Young-hee",
+      "Season": "Season 2"
+    },
+    {
+      "File": "010-o-button.png",
+      "Title": "O Button",
+      "Season": "Season 2"
+    },
+    {
+      "File": "011-x-button.png",
+      "Title": "X Button",
+      "Season": "Season 2"
+    },
+    {
+      "File": "012-gi-hun.png",
+      "Title": "Gi Hun",
+      "Season": "Season 2"
+    },
+    {
+      "File": "013-gi-hun-season-2.png",
+      "Title": "Gi Hun Season 2",
+      "Season": "Season 2"
+    },
+    {
+      "File": "014-in-ho.png",
+      "Title": "In-ho",
+      "Season": "Season 2"
+    },
+    {
+      "File": "015-myung-gi.png",
+      "Title": "Myung-gi",
+      "Season": "Season 2"
+    },
+    {
+      "File": "016-hyun-ju.png",
+      "Title": "Hyun-ju",
+      "Season": "Season 2"
+    },
+    {
+      "File": "017-thanos.png",
+      "Title": "Thanos",
+      "Season": "Season 2"
+    },
+    {
+      "File": "018-jun-hee.png",
+      "Title": "Jun-hee",
+      "Season": "Season 2"
+    },
+    {
+      "File": "019-jun-ho.png",
+      "Title": "Jun-ho",
+      "Season": "Season 2"
+    },
+    {
+      "File": "020-recruiter.png",
+      "Title": "Recruiter",
+      "Season": "Season 2"
+    },
+    {
+      "File": "021-no-eul.png",
+      "Title": "No-Eul",
+      "Season": "Season 2"
+    },
+    {
+      "File": "022-piggy-bank.png",
+      "Title": "Piggy Bank",
+      "Season": "Season 2"
+    },
+    {
+      "File": "023-dalgona.png",
+      "Title": "Dalgona",
+      "Season": "Season 2"
+    },
+    {
+      "File": "024-carousel-horse.png",
+      "Title": "Carousel Horse",
+      "Season": "Season 2"
+    },
+    {
+      "File": "025-gong-gi.png",
+      "Title": "Gong-gi",
+      "Season": "Season 2"
+    }
+  ]
+}

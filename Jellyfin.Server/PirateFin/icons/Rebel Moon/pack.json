@@ -1,0 +1,62 @@
+{
+  "Name": "Rebel Moon",
+  "Order": 40,
+  "Icons": [
+    {
+      "File": "001-kora-battle-ready.png",
+      "Title": "Kora Battle Ready"
+    },
+    {
+      "File": "002-zack-snyder.png",
+      "Title": "Zack Snyder"
+    },
+    {
+      "File": "003-milius.png",
+      "Title": "Milius"
+    },
+    {
+      "File": "004-noble.png",
+      "Title": "Noble"
+    },
+    {
+      "File": "005-jimmy.png",
+      "Title": "Jimmy"
+    },
+    {
+      "File": "006-tarak.png",
+      "Title": "Tarak"
+    },
+    {
+      "File": "007-kora.png",
+      "Title": "Kora"
+    },
+    {
+      "File": "008-nemesis.png",
+      "Title": "Nemesis"
+    },
+    {
+      "File": "009-kai.png",
+      "Title": "Kai"
+    },
+    {
+      "File": "010-priest.png",
+      "Title": "Priest"
+    },
+    {
+      "File": "011-darrian-bloodaxe.png",
+      "Title": "Darrian Bloodaxe"
+    },
+    {
+      "File": "012-devra-bloodaxe.png",
+      "Title": "Devra Bloodaxe"
+    },
+    {
+      "File": "013-general-titus.png",
+      "Title": "General Titus"
+    },
+    {
+      "File": "014-gunnar.png",
+      "Title": "Gunnar"
+    }
+  ]
+}

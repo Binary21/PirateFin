@@ -12,10 +12,12 @@ using System.Threading;
 using Jellyfin.Data.Enums;
 using Jellyfin.Extensions;
 using MediaBrowser.Controller.MediaEncoding;
+using MediaBrowser.Controller.PirateFin;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Dlna;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.IO;
+using MediaBrowser.Model.PirateFin;
 using Microsoft.Extensions.Logging;
 
 namespace MediaBrowser.Controller.Entities.TV
@@ -23,7 +25,7 @@ namespace MediaBrowser.Controller.Entities.TV
     /// <summary>
     /// Class Episode.
     /// </summary>
-    public class Episode : Video, IHasTrailers, IHasLookupInfo<EpisodeInfo>, IHasSeries
+    public class Episode : Video, IHasTrailers, IHasLookupInfo<EpisodeInfo>, IHasSeries, IPirateFinDownloadable
     {
         public static IMediaEncoder MediaEncoder { get; set; }
 
@@ -41,19 +43,67 @@ namespace MediaBrowser.Controller.Entities.TV
 
         public int? AirsBeforeEpisodeNumber { get; set; }
 
+        /// <summary>
+        /// Gets or sets the magnet url of the chosen release (PirateFin).
+        /// </summary>
         public string DownloadUrl { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Gets or sets the seeders of the chosen release (PirateFin).
+        /// </summary>
         public int? Seeders { get; set; }
 
-        public bool IsDownloadable { get; set; } = false;
+        /// <summary>
+        /// Gets or sets a value indicating whether <see cref="DownloadUrl"/> is set (PirateFin).
+        /// </summary>
+        public bool IsDownloadable { get; set; }
 
-        public bool CantDownload { get; set; } = false;
-
-        public DateTime EpisodeReleaseWeek { get; set; }
-
+        /// <summary>
+        /// Gets or sets the PirateFin library ("Shows" / "Anime") the episode was generated for.
+        /// </summary>
         public string LibraryType { get; set; }
 
+        /// <summary>
+        /// Gets or sets the romaji title of the series / season, used for torrent searches.
+        /// </summary>
         public string AlternateTitle { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets when the release author search first ran, in UTC. Starts the author search window.
+        /// </summary>
+        public DateTime? SourceSearchStartedUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets when the next release search is due, in UTC.
+        /// </summary>
+        public DateTime? NextSourceSearchUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets the author-less fallback releases the user can choose from.
+        /// </summary>
+        public TorrentCandidate[] SourceCandidates { get; set; } = [];
+
+        /// <summary>
+        /// Gets or sets when the fallback releases were last searched, in UTC.
+        /// </summary>
+        public DateTime? SourceCandidatesUpdatedUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets when the download started, in UTC; <c>null</c> when not downloading.
+        /// </summary>
+        public DateTime? DownloadStartedUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets the audio type of the anime release this episode uses (PirateFin); <c>null</c> for TV, and for
+        /// anime episodes found before Dub / Sub existed (those are subs).
+        /// </summary>
+        public MediaBrowser.Model.PirateFin.ReleaseLanguage? ReleaseLanguage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of this episode's other-language version (PirateFin): a hidden episode item with
+        /// <see cref="Video.PrimaryVersionId"/> pointing here, shown by Jellyfin as a second version once it's playable.
+        /// </summary>
+        public Guid? AlternateVersionId { get; set; }
 
         /// <summary>
         /// Gets or sets the ending episode number for double episodes.
@@ -84,8 +134,8 @@ namespace MediaBrowser.Controller.Entities.TV
 
         public override bool CanDelete()
         {
-            // Generated placeholders have no file on disk; they must survive library validation even after leaving the download queue (Scheduled = false).
-            if (IsPlaceHolder && IsVirtualItem && IsInternet && !string.IsNullOrEmpty(Path) && !File.Exists(Path))
+            // PirateFin items have no file on disk until downloaded; library scans must never remove them (even once the source search gave up and Scheduled = false).
+            if (IsInternet && !IsDownloaded && !string.IsNullOrEmpty(Path) && !File.Exists(Path))
             {
                 return false;
             }
@@ -159,7 +209,7 @@ namespace MediaBrowser.Controller.Entities.TV
         }
 
         [JsonIgnore]
-        public bool IsMissingEpisode => LocationType == LocationType.Virtual && (!IsInternet || CantDownload);
+        public bool IsMissingEpisode => LocationType == LocationType.Virtual && !IsInternet;
 
         [JsonIgnore]
         public Guid SeasonId { get; set; }
@@ -356,6 +406,13 @@ namespace MediaBrowser.Controller.Entities.TV
             return id;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether PirateFin created this episode (a placeholder, or downloaded from a source it found).
+        /// Its season / episode numbers come from Trakt / AniList and are kept by metadata refreshes.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsPirateFinEpisode => IsInternet || !string.IsNullOrEmpty(DownloadUrl);
+
         public override bool BeforeMetadataRefresh(bool replaceAllMetadata)
         {
             var hasChanges = base.BeforeMetadataRefresh(replaceAllMetadata);
@@ -399,7 +456,11 @@ namespace MediaBrowser.Controller.Entities.TV
 
                     try
                     {
-                        if (LibraryManager.FillMissingEpisodeNumbersFromPath(this, replaceAllMetadata))
+                        // PirateFin episodes are numbered from Trakt / AniList. Parsing a torrent's file name (e.g. by air
+                        // date) must not replace that, or the series briefly has episodes without a season and Jellyfin
+                        // creates an empty "Season Unknown"; only missing numbers are filled in.
+                        var hasPirateFinNumbers = IsPirateFinEpisode && IndexNumber.HasValue && ParentIndexNumber.HasValue;
+                        if (!hasPirateFinNumbers && LibraryManager.FillMissingEpisodeNumbersFromPath(this, replaceAllMetadata && !IsPirateFinEpisode))
                         {
                             hasChanges = true;
                         }

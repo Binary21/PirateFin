@@ -1,0 +1,18 @@
+{
+  "Name": "The End of the F***ing World",
+  "Order": 15,
+  "Icons": [
+    {
+      "File": "001-james.png",
+      "Title": "James"
+    },
+    {
+      "File": "002-james-in-disguise-hawaiian-shirt.png",
+      "Title": "James In Disguise (Hawaiian Shirt)"
+    },
+    {
+      "File": "003-alyssa.png",
+      "Title": "Alyssa"
+    }
+  ]
+}

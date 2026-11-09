@@ -1,0 +1,38 @@
+{
+  "Name": "Fuller House",
+  "Order": 21,
+  "Icons": [
+    {
+      "File": "001-dj.png",
+      "Title": "DJ"
+    },
+    {
+      "File": "002-stephanie.png",
+      "Title": "Stephanie"
+    },
+    {
+      "File": "003-kimmy.png",
+      "Title": "Kimmy"
+    },
+    {
+      "File": "004-jackson.png",
+      "Title": "Jackson"
+    },
+    {
+      "File": "005-max.png",
+      "Title": "Max"
+    },
+    {
+      "File": "006-ramona.png",
+      "Title": "Ramona"
+    },
+    {
+      "File": "007-cosmo.png",
+      "Title": "Cosmo"
+    },
+    {
+      "File": "008-house.png",
+      "Title": "House"
+    }
+  ]
+}

@@ -1248,32 +1248,6 @@ namespace MediaBrowser.Providers.Manager
             return RefreshItem(item, options, cancellationToken);
         }
 
-        // Paralleized item refresh for multiple episode refresh at once. Makes building seasons take less time.
-        public async Task RefreshFullItems(List<BaseItem> items, MetadataRefreshOptions options, CancellationToken cancellationToken)
-        {
-            var refreshOptions = new ParallelOptions
-            {
-                MaxDegreeOfParallelism = 4,
-                CancellationToken = cancellationToken
-            };
-
-            await Parallel.ForEachAsync(items, refreshOptions, async (item, option) =>
-            {
-                try
-                {
-                    await RefreshItem(item, options, cancellationToken).ConfigureAwait(false);
-                }
-                catch (OperationCanceledException)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Failed to refresh {Series} season {Name} episode {Episode}, ID:({Id})", item.GetParent().GetParent().Name, item.GetParent().Name, item.IndexNumber, item.Id);
-                }
-            }).ConfigureAwait(false);
-        }
-
         /// <inheritdoc/>
         public void Dispose()
         {

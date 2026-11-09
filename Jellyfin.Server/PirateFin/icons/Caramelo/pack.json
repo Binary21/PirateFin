@@ -1,0 +1,30 @@
+{
+  "Name": "Caramelo",
+  "Order": 41,
+  "Icons": [
+    {
+      "File": "001-caramelo-blue.png",
+      "Title": "Caramelo (Blue)"
+    },
+    {
+      "File": "002-caramelo-teal.png",
+      "Title": "Caramelo (Teal)"
+    },
+    {
+      "File": "003-caramelo-yellow.png",
+      "Title": "Caramelo (Yellow)"
+    },
+    {
+      "File": "004-caramelo-red.png",
+      "Title": "Caramelo (Red)"
+    },
+    {
+      "File": "005-caramelo-purple.png",
+      "Title": "Caramelo (Purple)"
+    },
+    {
+      "File": "006-caramelo-green.png",
+      "Title": "Caramelo (Green)"
+    }
+  ]
+}

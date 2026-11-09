@@ -1,0 +1,30 @@
+{
+  "Name": "The Sea Beast",
+  "Order": 45,
+  "Icons": [
+    {
+      "File": "001-maisie.png",
+      "Title": "Maisie"
+    },
+    {
+      "File": "002-jacob.png",
+      "Title": "Jacob"
+    },
+    {
+      "File": "003-blue.png",
+      "Title": "Blue"
+    },
+    {
+      "File": "004-red.png",
+      "Title": "Red"
+    },
+    {
+      "File": "005-captain-crow.png",
+      "Title": "Captain Crow"
+    },
+    {
+      "File": "006-sarah.png",
+      "Title": "Sarah"
+    }
+  ]
+}

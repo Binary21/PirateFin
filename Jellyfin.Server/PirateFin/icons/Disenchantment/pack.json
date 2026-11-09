@@ -1,0 +1,30 @@
+{
+  "Name": "Disenchantment",
+  "Order": 51,
+  "Icons": [
+    {
+      "File": "001-bean.png",
+      "Title": "Bean"
+    },
+    {
+      "File": "002-luci.png",
+      "Title": "Luci"
+    },
+    {
+      "File": "003-elfo.png",
+      "Title": "Elfo"
+    },
+    {
+      "File": "004-zog.png",
+      "Title": "Zog"
+    },
+    {
+      "File": "005-oona.png",
+      "Title": "Oona"
+    },
+    {
+      "File": "006-stan-the-executioner.png",
+      "Title": "Stan the Executioner"
+    }
+  ]
+}

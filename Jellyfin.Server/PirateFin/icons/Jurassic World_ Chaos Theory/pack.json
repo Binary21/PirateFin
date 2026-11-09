@@ -1,0 +1,54 @@
+{
+  "Name": "Jurassic World: Chaos Theory",
+  "Order": 20,
+  "Icons": [
+    {
+      "File": "001-allosaurus.png",
+      "Title": "Allosaurus"
+    },
+    {
+      "File": "002-ghost.png",
+      "Title": "Ghost"
+    },
+    {
+      "File": "003-bumpy.png",
+      "Title": "Bumpy"
+    },
+    {
+      "File": "004-atrociraptor.png",
+      "Title": "Atrociraptor"
+    },
+    {
+      "File": "005-nasu.png",
+      "Title": "Nasu"
+    },
+    {
+      "File": "006-trex.png",
+      "Title": "TRex"
+    },
+    {
+      "File": "007-darius.png",
+      "Title": "Darius"
+    },
+    {
+      "File": "008-ben.png",
+      "Title": "Ben"
+    },
+    {
+      "File": "009-kenji.png",
+      "Title": "Kenji"
+    },
+    {
+      "File": "010-sammy.png",
+      "Title": "Sammy"
+    },
+    {
+      "File": "011-yaz.png",
+      "Title": "Yaz"
+    },
+    {
+      "File": "012-brooklynn.png",
+      "Title": "Brooklynn"
+    }
+  ]
+}

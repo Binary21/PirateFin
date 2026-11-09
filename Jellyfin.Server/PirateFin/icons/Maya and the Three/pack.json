@@ -1,0 +1,34 @@
+{
+  "Name": "Maya and the Three",
+  "Order": 50,
+  "Icons": [
+    {
+      "File": "001-maya.png",
+      "Title": "Maya"
+    },
+    {
+      "File": "002-rico.png",
+      "Title": "Rico"
+    },
+    {
+      "File": "003-chimi.png",
+      "Title": "Chimi"
+    },
+    {
+      "File": "004-picchu.png",
+      "Title": "Picchu"
+    },
+    {
+      "File": "005-chiapa.png",
+      "Title": "Chiapa"
+    },
+    {
+      "File": "006-king-teca.png",
+      "Title": "King Teca"
+    },
+    {
+      "File": "007-zatz.png",
+      "Title": "Zatz"
+    }
+  ]
+}

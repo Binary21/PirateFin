@@ -1,0 +1,54 @@
+{
+  "Name": "Lupin",
+  "Order": 12,
+  "Icons": [
+    {
+      "File": "001-assane-cabbie-the-gentleman-theif.png",
+      "Title": "Assane Cabbie (the gentleman theif)"
+    },
+    {
+      "File": "002-assane-pimp-the-sapeur.png",
+      "Title": "Assane Pimp (the Sapeur)"
+    },
+    {
+      "File": "003-assane-beanie-the-trash-collector.png",
+      "Title": "Assane Beanie (the Trash Collector)"
+    },
+    {
+      "File": "004-assane-grey-beard-the-suave-man.png",
+      "Title": "Assane Grey Beard (the Suave Man)"
+    },
+    {
+      "File": "005-assane-platinum-hair-the-security-guard.png",
+      "Title": "Assane Platinum Hair (the Security Guard)"
+    },
+    {
+      "File": "006-assane-trilby-shades-the-hat.png",
+      "Title": "Assane Trilby & Shades (the Hat)"
+    },
+    {
+      "File": "007-lupin-the-black-pearl.png",
+      "Title": "Lupin The Black Pearl"
+    },
+    {
+      "File": "008-assane-the-gangster.png",
+      "Title": "Assane the Gangster"
+    },
+    {
+      "File": "009-assane-the-geek.png",
+      "Title": "Assane the Geek"
+    },
+    {
+      "File": "010-assane-the-businessman.png",
+      "Title": "Assane the Businessman"
+    },
+    {
+      "File": "011-lupin-j-accuse.png",
+      "Title": "Lupin J'accuse"
+    },
+    {
+      "File": "012-assane-the-old-man.png",
+      "Title": "Assane the old man"
+    }
+  ]
+}

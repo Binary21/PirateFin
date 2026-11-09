@@ -1,0 +1,22 @@
+{
+  "Name": "B: The Beginning",
+  "Order": 56,
+  "Icons": [
+    {
+      "File": "001-lily.png",
+      "Title": "Lily"
+    },
+    {
+      "File": "002-koku.png",
+      "Title": "Koku"
+    },
+    {
+      "File": "003-keith.png",
+      "Title": "Keith"
+    },
+    {
+      "File": "004-killer-b.png",
+      "Title": "Killer B"
+    }
+  ]
+}

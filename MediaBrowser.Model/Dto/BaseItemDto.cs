@@ -9,6 +9,7 @@ using MediaBrowser.Model.Drawing;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Library;
 using MediaBrowser.Model.LiveTv;
+using MediaBrowser.Model.PirateFin;
 using MediaBrowser.Model.Providers;
 
 namespace MediaBrowser.Model.Dto
@@ -19,11 +20,46 @@ namespace MediaBrowser.Model.Dto
     /// </summary>
     public class BaseItemDto : IHasProviderIds, IItemDto, IHasServerId
     {
-        public bool IsInterent { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is a PirateFin internet placeholder that has not finished downloading.
+        /// </summary>
+        public bool IsInternet { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether a download source is known for the item.
+        /// </summary>
         public bool IsDownloadable { get; set; }
 
-        public bool CantDownload { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether a PirateFin episode or movie can be played yet (downloaded, or far enough
+        /// into its download); <c>null</c> for other items.
+        /// </summary>
+        public bool? IsReadyToPlay { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PirateFin release status. Clients should use this instead of LocationType / IsMissing for PirateFin items.
+        /// </summary>
+        public ReleaseStatus? ReleaseStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of fallback sources the user can choose from.
+        /// </summary>
+        public int? SourceCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the season (or the episode's season) is subscribed.
+        /// </summary>
+        public bool? IsSubscribed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language the user subscribed to the (anime) season in, when they chose one.
+        /// </summary>
+        public MediaBrowser.Model.PirateFin.ReleaseLanguage? SubscriptionLanguage { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a PirateFin season or episode is anime (subscribing asks Dub or Sub).
+        /// </summary>
+        public bool? IsAnime { get; set; }
 
         public string Title { get; set; }
 
@@ -228,11 +264,6 @@ namespace MediaBrowser.Model.Dto
         /// </summary>
         /// <value>The number.</value>
         public string Number { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the download url of the item.
-        /// </summary>
-        public string MagnetURL { get; set; }
 
         public string ChannelNumber { get; set; }
 
@@ -510,6 +541,9 @@ namespace MediaBrowser.Model.Dto
         /// <value>The backup image url.</value>
         public string BackupImageUrl { get; set; }
 
+        /// <summary>
+        /// Gets or sets the exact air time of a PirateFin item, in UTC.
+        /// </summary>
         public DateTime? FirstAiring { get; set; }
 
         /// <summary>

@@ -1,0 +1,42 @@
+{
+  "Name": "Shadow and Bone",
+  "Order": 48,
+  "Icons": [
+    {
+      "File": "001-alina.png",
+      "Title": "Alina"
+    },
+    {
+      "File": "002-general-kirigan.png",
+      "Title": "General Kirigan"
+    },
+    {
+      "File": "003-mal.png",
+      "Title": "Mal"
+    },
+    {
+      "File": "004-kaz.png",
+      "Title": "Kaz"
+    },
+    {
+      "File": "005-jesper.png",
+      "Title": "Jesper"
+    },
+    {
+      "File": "006-inej.png",
+      "Title": "Inej"
+    },
+    {
+      "File": "007-stag.png",
+      "Title": "Stag"
+    },
+    {
+      "File": "008-crow.png",
+      "Title": "Crow"
+    },
+    {
+      "File": "009-milo.png",
+      "Title": "Milo"
+    }
+  ]
+}

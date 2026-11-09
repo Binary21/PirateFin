@@ -1,0 +1,46 @@
+{
+  "Name": "Little House on the Prairie",
+  "Order": 59,
+  "Icons": [
+    {
+      "File": "001-charles-ingalls.png",
+      "Title": "Charles Ingalls"
+    },
+    {
+      "File": "002-caroline-ingalls.png",
+      "Title": "Caroline Ingalls"
+    },
+    {
+      "File": "003-laura-ingalls.png",
+      "Title": "Laura Ingalls"
+    },
+    {
+      "File": "004-mary-ingalls.png",
+      "Title": "Mary Ingalls"
+    },
+    {
+      "File": "005-jack.png",
+      "Title": "Jack"
+    },
+    {
+      "File": "006-john-edwards.png",
+      "Title": "John Edwards"
+    },
+    {
+      "File": "007-william-mitchell.png",
+      "Title": "William Mitchell"
+    },
+    {
+      "File": "008-good-eagle.png",
+      "Title": "Good Eagle"
+    },
+    {
+      "File": "009-white-sun.png",
+      "Title": "White Sun"
+    },
+    {
+      "File": "010-dr-george-tann.png",
+      "Title": "Dr. George Tann"
+    }
+  ]
+}

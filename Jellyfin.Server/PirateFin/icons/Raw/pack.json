@@ -1,0 +1,38 @@
+{
+  "Name": "Raw",
+  "Order": 17,
+  "Icons": [
+    {
+      "File": "001-roman-reigns.png",
+      "Title": "Roman Reigns"
+    },
+    {
+      "File": "002-john-cena.png",
+      "Title": "John Cena"
+    },
+    {
+      "File": "003-cody-rhodes.png",
+      "Title": "Cody Rhodes"
+    },
+    {
+      "File": "004-bianca-belair.png",
+      "Title": "Bianca Belair"
+    },
+    {
+      "File": "005-liv-morgan.png",
+      "Title": "Liv Morgan"
+    },
+    {
+      "File": "006-rey-mysterio.png",
+      "Title": "Rey Mysterio"
+    },
+    {
+      "File": "007-cm-punk.png",
+      "Title": "CM Punk"
+    },
+    {
+      "File": "008-rhea-ripley.png",
+      "Title": "Rhea Ripley"
+    }
+  ]
+}

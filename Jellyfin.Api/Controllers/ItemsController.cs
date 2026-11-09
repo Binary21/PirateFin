@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Api.Extensions;
 using Jellyfin.Api.Helpers;
@@ -15,7 +14,6 @@ using MediaBrowser.Common.Extensions;
 using MediaBrowser.Controller.Dto;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
-using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Playlists;
 using MediaBrowser.Controller.Session;
@@ -46,11 +44,6 @@ public class ItemsController : BaseJellyfinApiController
     private readonly ISessionManager _sessionManager;
     private readonly IUserDataManager _userDataRepository;
     private readonly ISearchManager _searchManager;
-    private readonly IInternetScheduleFetcher _internetScheduleFetcher;
-    private readonly ISeriesGenerator _seriesGenerator;
-    private readonly IInternetSearchFetcher _internetSearchFetcher;
-    private readonly ISubscriptionService _subscriptionService;
-    private readonly IDownloadUrlService _downloadUrlService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ItemsController"/> class.
@@ -63,11 +56,6 @@ public class ItemsController : BaseJellyfinApiController
     /// <param name="sessionManager">Instance of the <see cref="ISessionManager"/> interface.</param>
     /// <param name="userDataRepository">Instance of the <see cref="IUserDataManager"/> interface.</param>
     /// <param name="searchManager">Instance of the <see cref="ISearchManager"/> interface.</param>
-    /// <param name="internetScheduleFetcher">Instance of the InternetScheduleFetcher interface.</param>
-    /// <param name="internetSearchFetcher">Instance of the internetSearchFetcher interface.</param>
-    /// <param name="subscriptionService">Instance of the Subscription Service interface.</param>
-    /// <param name="seriesGenerator">Temporary.</param>
-    /// <param name="downloadUrlService">Temporary delete later.</param>
     public ItemsController(
         IUserManager userManager,
         ILibraryManager libraryManager,
@@ -76,12 +64,7 @@ public class ItemsController : BaseJellyfinApiController
         ILogger<ItemsController> logger,
         ISessionManager sessionManager,
         IUserDataManager userDataRepository,
-        ISearchManager searchManager,
-        IInternetScheduleFetcher internetScheduleFetcher,
-        IInternetSearchFetcher internetSearchFetcher,
-        ISubscriptionService subscriptionService,
-        ISeriesGenerator seriesGenerator,
-        IDownloadUrlService downloadUrlService)
+        ISearchManager searchManager)
     {
         _userManager = userManager;
         _libraryManager = libraryManager;
@@ -91,11 +74,6 @@ public class ItemsController : BaseJellyfinApiController
         _sessionManager = sessionManager;
         _userDataRepository = userDataRepository;
         _searchManager = searchManager;
-        _internetScheduleFetcher = internetScheduleFetcher;
-        _internetSearchFetcher = internetSearchFetcher;
-        _subscriptionService = subscriptionService;
-        _seriesGenerator = seriesGenerator;
-        _downloadUrlService = downloadUrlService;
     }
 
     /// <summary>
@@ -282,33 +260,6 @@ public class ItemsController : BaseJellyfinApiController
         [FromQuery] bool enableTotalRecordCount = true,
         [FromQuery] bool? enableImages = true)
     {
-        // TODO: validate this endpoint, commented code shouldnt reach production
-        // var item = _libraryManager.GetParentItem(parentId, userId);
-
-        // if (item is not Folder folder)
-        // {
-        //     folder = _libraryManager.GetUserRootFolder();
-        // }
-
-        // var existingEpisodes = _libraryManager.GetItemList(new InternalItemsQuery
-        //         {
-        //             IncludeItemTypes = new[] { BaseItemKind.Series, BaseItemKind.Folder },
-        //             Recursive = true
-        //         })
-        //         .OfType<Series>()
-        //         .Where(m => m.ParentId.Equals(folder.Id))
-        //         .ToList();
-
-        // var dtoOptions = new DtoOptions
-        // {
-        //     Fields = [ItemFields.ParentId, ItemFields.Path, ItemFields.Overview, ItemFields.Genres, ItemFields.Studios]
-        // };
-
-        // return new QueryResult<BaseItemDto>(
-        //     startIndex,
-        //     existingEpisodes.Count,
-        //     _dtoService.GetBaseItemDtos(existingEpisodes, dtoOptions, null).ToList());
-
         var isApiKey = User.GetIsApiKey();
         // if api key is used (auth.IsApiKey == true), then `user` will be null throughout this method
         userId = RequestHelpers.GetUserId(User, userId);
@@ -641,41 +592,28 @@ public class ItemsController : BaseJellyfinApiController
         {
             // folder.GetItems applies user-access filtering via the InternalItemsQuery's User.
             result = folder.GetItems(query);
-            if (result.Items.Count > 0)
+            if (searchResultScores is not null && searchResultScores.Count > 0)
             {
-                var tempItem = result.Items[0].ParentId;
-                var existingEpisodes = _libraryManager.GetItemList(new InternalItemsQuery
-                    {
-                        IncludeItemTypes = new[] { BaseItemKind.Series, BaseItemKind.Folder },
-                        Recursive = true
-                    })
-                    .OfType<Series>()
-                    .Where(m => m.ParentId.Equals(tempItem))
-                    .ToList();
+                var orderedItems = result.Items
+                    .OrderByDescending(item => searchResultScores.GetValueOrDefault(item.Id, 0f))
+                    .ThenBy(item => item.SortName)
+                    .ToArray();
 
-                if (searchResultScores is not null && searchResultScores.Count > 0)
+                var totalCount = orderedItems.Length;
+                if (startIndex.HasValue && startIndex.Value > 0)
                 {
-                    var orderedItems = existingEpisodes
-                        .OrderByDescending(item => searchResultScores.GetValueOrDefault(item.Id, 0f))
-                        .ThenBy(item => item.SortName)
-                        .ToArray();
-
-                    var totalCount = orderedItems.Length;
-                    if (startIndex.HasValue && startIndex.Value > 0)
-                    {
-                        orderedItems = orderedItems.Skip(startIndex.Value).ToArray();
-                    }
-
-                    if (limit.HasValue)
-                    {
-                        orderedItems = orderedItems.Take(limit.Value).ToArray();
-                    }
-
-                    return new QueryResult<BaseItemDto>(
-                        startIndex,
-                        totalCount,
-                        _dtoService.GetBaseItemDtos(orderedItems, dtoOptions, user));
+                    orderedItems = orderedItems.Skip(startIndex.Value).ToArray();
                 }
+
+                if (limit.HasValue)
+                {
+                    orderedItems = orderedItems.Take(limit.Value).ToArray();
+                }
+
+                return new QueryResult<BaseItemDto>(
+                    startIndex,
+                    totalCount,
+                    _dtoService.GetBaseItemDtos(orderedItems, dtoOptions, user));
             }
         }
         else
@@ -1151,296 +1089,6 @@ public class ItemsController : BaseJellyfinApiController
         }
 
         return _userDataRepository.GetUserDataDto(item, user);
-    }
-
-    /// <summary>
-    /// Get Internet Schedules for the week.
-    /// </summary>
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("AnimeSchedule")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<ScheduleEpisode>>> GetAnimeSchedule()
-    {
-        var items = await _internetScheduleFetcher.GetAnimeWeeklySchedule().ConfigureAwait(false);
-        return Ok(items);
-    }
-
-    /// <summary>
-    /// Get Internet Schedules for the week.
-    /// </summary>
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("MovieSchedule")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<ScheduleMovie>>> GetMovieSchedule()
-    {
-        var items = await _internetScheduleFetcher.GetMovieLatestSchedule().ConfigureAwait(false);
-        return Ok(items);
-    }
-
-    /// <summary>
-    /// Get Internet searched Anime.
-    /// </summary>
-    /// <param name="search">Anime search query.</param>
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("AnimeSearch")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<SearchedSeries>> GetAnimeSearch(
-        [FromQuery] string search)
-    {
-        var items = await _internetSearchFetcher.GetAnimeSeries(search).ConfigureAwait(false);
-        await _seriesGenerator.GenerateSeries(items, "Anime").ConfigureAwait(false);
-        return Ok(items);
-    }
-
-    /// <summary>
-    /// Get Internet searched TV Shows.
-    /// </summary>
-    /// <param name="search">Anime search query.</param>
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("TVShowSearch")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<SearchedSeries>>> GetTVShowSearch(
-        [FromQuery] string search)
-    {
-        var items = await _internetSearchFetcher.GetTVShowSeries(search).ConfigureAwait(false);
-        foreach (SearchedSeries series in items)
-        {
-            await _seriesGenerator.GenerateSeries(series, "Shows").ConfigureAwait(false);
-        }
-
-        return Ok(items);
-    }
-
-    /// <summary>
-    /// Get Internet searched TV Shows.
-    /// </summary>
-    /// <param name="search">Anime search query.</param>
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("TVShowSearchMagnetUrl")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Dictionary<int, Dictionary<int, EpisodeDownloadCandidate>>>> GetTVShowSearchMagnetUrl(
-        [FromQuery] string search)
-    {
-        var items = await _internetSearchFetcher.GetTVShowSeries(search).ConfigureAwait(false);
-        Dictionary<int, Dictionary<int, EpisodeDownloadCandidate>> results = [];
-        foreach (SearchedSeries series in items)
-        {
-            var seriesResults = await _downloadUrlService.GetTVShowBulkDownloadUrlsAsync(series, "Shows").ConfigureAwait(false);
-            foreach (var kvp in seriesResults)
-            {
-                results[kvp.Key] = kvp.Value;
-            }
-        }
-
-        return Ok(results);
-    }
-
-    /// <summary>
-    /// Get Internet Schedules for the week.
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// </summary>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("TVSchedule")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<ScheduleEpisode>>> GetTVSchedule()
-    {
-        var items = await _internetScheduleFetcher.GetTVShowWeeklySchedule().ConfigureAwait(false);
-        return Ok(items);
-    }
-
-    /// <summary>
-    /// Get Internet Schedules for the week.
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// </summary>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("AnimeScheduleItems")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<BaseItemDto>>> GetItemsAnimeSchedule()
-    {
-        var existingEpisodes = _libraryManager.GetItemList(new InternalItemsQuery
-                {
-                    IncludeItemTypes = new[] { BaseItemKind.Episode },
-                    Recursive = true,
-                    Scheduled = true
-                })
-                .OfType<Episode>()
-                .ToList();
-
-        var dtoOptions = new DtoOptions
-        {
-            Fields = [ItemFields.OriginalTitle, ItemFields.Name, ItemFields.IsInterent, ItemFields.IsPlaceholder, ItemFields.IsDownloadable, ItemFields.ParentId, ItemFields.Path, ItemFields.Overview, ItemFields.Genres, ItemFields.Studios, ItemFields.ChildCount]
-        };
-
-        return _dtoService.GetBaseItemDtos(existingEpisodes, dtoOptions, null).ToList();
-    }
-
-    /// <summary>
-    /// Deletes all scheduled episodes.
-    /// </summary>
-    /// <response code="204">Scheduled episodes deleted.</response>
-    /// <response code="401">Unauthorized access.</response>
-    /// <returns>A <see cref="NoContentResult"/>.</returns>
-    [HttpDelete("AnimeScheduleItems")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public ActionResult DeleteItemsAnimeSchedule()
-    {
-        var isApiKey = User.GetIsApiKey();
-        var userId = User.GetUserId();
-        var user = !isApiKey && !userId.IsEmpty()
-            ? _userManager.GetUserById(userId)
-            : null;
-
-        if (!isApiKey && user is null)
-        {
-            return Unauthorized("Unauthorized access");
-        }
-
-        var scheduledEpisodes = _libraryManager.GetItemList(new InternalItemsQuery
-            {
-                IncludeItemTypes = new[] { BaseItemKind.Series, BaseItemKind.Episode, BaseItemKind.Season },
-                Recursive = true
-            })
-            .OfType<Series>()
-            .Where(m => m.IsInternet && !m.IsDownloaded)
-            .ToList();
-
-        foreach (var episode in scheduledEpisodes)
-        {
-            if (user is not null && !episode.CanDelete(user))
-            {
-                return Unauthorized("Unauthorized access");
-            }
-
-            _libraryManager.DeleteItem(
-                episode,
-                new DeleteOptions { DeleteFileLocation = true },
-                true);
-        }
-
-        return NoContent();
-    }
-
-    /// <summary>
-    /// Force Deletes indiviual item.
-    /// </summary>
-    /// <param name="itemId">The item id.</param>
-    /// <response code="204">Scheduled episodes deleted.</response>
-    /// <response code="401">Unauthorized access.</response>
-    /// <returns>A <see cref="NoContentResult"/>.</returns>
-    [HttpDelete("ItemForceDelete/{itemId}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public ActionResult ItemForceDelete(
-        [FromRoute, Required] Guid itemId)
-    {
-        var isApiKey = User.GetIsApiKey();
-        var userId = User.GetUserId();
-        var user = !isApiKey && !userId.IsEmpty()
-            ? _userManager.GetUserById(userId)
-            : null;
-
-        if (!isApiKey && user is null)
-        {
-            return Unauthorized("Unauthorized access");
-        }
-
-        var targetItem = _libraryManager.GetItemById(itemId);
-        if (targetItem != null)
-        {
-            _libraryManager.DeleteItem(
-                targetItem,
-                new DeleteOptions { DeleteFileLocation = false },
-                true);
-        }
-        else
-        {
-            _logger.LogError("Deletion Target Item could not be found.");
-        }
-
-        return NoContent();
-    }
-
-    [HttpPost("ProcessDueEpisodes")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task ProcessDueEpisodes()
-    {
-        await _subscriptionService.ProcessDueEpisodesAsync(CancellationToken.None).ConfigureAwait(false);
-    }
-
-        /// <summary>
-    /// Get Internet Schedules for the week.
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// </summary>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("AnimeScheduleSeries")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<BaseItemDto>>> GetItemsAnimeSeries()
-    {
-        var existingEpisodes = _libraryManager.GetItemList(new InternalItemsQuery
-                {
-                    IncludeItemTypes = new[] { BaseItemKind.Series, BaseItemKind.Folder },
-                    Recursive = true,
-                    IsDownloadable = true,
-                })
-                .OfType<Series>()
-                .ToList();
-
-        var dtoOptions = new DtoOptions
-        {
-            Fields = [ItemFields.OriginalTitle, ItemFields.Name, ItemFields.IsInterent, ItemFields.IsPlaceholder, ItemFields.IsDownloadable, ItemFields.ParentId, ItemFields.Path, ItemFields.Overview, ItemFields.Genres, ItemFields.Studios, ItemFields.ChildCount]
-        };
-
-        return _dtoService.GetBaseItemDtos(existingEpisodes, dtoOptions, null).ToList();
-    }
-
-        /// <summary>
-    /// Get Internet Schedules for the week.
-    /// <response code="200">return item user data.</response>
-    /// <response code="404">Item is not found.</response>
-    /// </summary>
-    /// <returns> Returns Task List Episode.</returns>
-    [HttpGet("AnimeScheduleSeason")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<BaseItemDto>>> GetItemsAnimeSeason()
-    {
-        var existingEpisodes = _libraryManager.GetItemList(new InternalItemsQuery
-                {
-                    IncludeItemTypes = new[] { BaseItemKind.Season },
-                    Recursive = true
-                })
-                .OfType<Season>()
-                .ToList();
-
-        var dtoOptions = new DtoOptions
-        {
-            Fields = [ItemFields.ParentId, ItemFields.Path, ItemFields.Overview, ItemFields.Genres, ItemFields.Studios]
-        };
-
-        return _dtoService.GetBaseItemDtos(existingEpisodes, dtoOptions, null).ToList();
     }
 
     /// <summary>

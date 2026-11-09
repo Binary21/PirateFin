@@ -1,0 +1,34 @@
+{
+  "Name": "BTS: The Return",
+  "Order": 58,
+  "Icons": [
+    {
+      "File": "001-suga.png",
+      "Title": "Suga"
+    },
+    {
+      "File": "002-jin.png",
+      "Title": "Jin"
+    },
+    {
+      "File": "003-j-hope.png",
+      "Title": "J-hope"
+    },
+    {
+      "File": "004-jimin.png",
+      "Title": "Jimin"
+    },
+    {
+      "File": "005-v.png",
+      "Title": "V"
+    },
+    {
+      "File": "006-jungkook.png",
+      "Title": "Jungkook"
+    },
+    {
+      "File": "007-rm.png",
+      "Title": "RM"
+    }
+  ]
+}

@@ -117,9 +117,8 @@ namespace MediaBrowser.Controller.Entities
             || Is4K.HasValue
             || IsLocked.HasValue
             || IsPlaceHolder.HasValue
-            || IsDownloadable
-            || CantDownload
             || Scheduled
+            || IsInternet.HasValue
             || IsMovie.HasValue
             || IsSports.HasValue
             || IsKids.HasValue
@@ -207,11 +206,15 @@ namespace MediaBrowser.Controller.Entities
 
         public IReadOnlyList<string> Genres { get; set; }
 
-        public bool IsDownloadable { get; set; }
-
-        public bool CantDownload { get; set; }
-
+        /// <summary>
+        /// Gets or sets a value indicating whether to only return items still in a PirateFin source search / download (Scheduled column).
+        /// </summary>
         public bool Scheduled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PirateFin IsInternet filter (placeholders that are not downloaded yet).
+        /// </summary>
+        public bool? IsInternet { get; set; }
 
         public bool? IsSpecialSeason { get; set; }
 
